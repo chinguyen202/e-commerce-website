@@ -1,3 +1,5 @@
+import * as React from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
@@ -11,6 +13,10 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { links } from '../utils/constants';
 
 type NavBarProps = {
   mode: 'light' | 'dark';
@@ -19,6 +25,13 @@ type NavBarProps = {
 
 const NavBar = ({ mode, setMode }: NavBarProps) => {
   const theme = useTheme();
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
   const handleModeChange = () => {
     setMode(mode === 'light' ? 'dark' : 'light');
@@ -27,6 +40,51 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+              {links.map((link) => (
+                <Link
+                  to={link.url}
+                  style={{
+                    textDecoration: 'none',
+                    color: theme.palette.secondary.main,
+                  }}
+                >
+                  <MenuItem key={link.id} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{link.text}</Typography>
+                  </MenuItem>
+                </Link>
+              ))}
+            </Menu>
+          </Box>
+
           <Link
             to="/"
             style={{
@@ -62,59 +120,37 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
               </Typography>
             </Toolbar>
           </Link>
-
           <Box
             sx={{
               flexGrow: 1,
               display: { xs: 'none', md: 'flex', margin: '2rem' },
             }}
           >
-            <Link
-              to="/"
-              style={{
-                textDecoration: 'none',
-                color: theme.palette.secondary.main,
-              }}
-            >
-              <Typography
-                variant="h6"
-                noWrap
-                sx={{
-                  mr: 3,
-                  display: { xs: 'none', md: 'flex' },
-                  fontWeight: 700,
-                  letterSpacing: '.3rem',
+            {links.map((page) => (
+              <Link
+                to={page.url}
+                style={{
                   textDecoration: 'none',
-                  color: 'inherit',
+                  color: theme.palette.secondary.main,
                 }}
               >
-                Home
-              </Typography>
-            </Link>
-            <Link
-              to="/products"
-              style={{
-                textDecoration: 'none',
-                color: theme.palette.secondary.main,
-              }}
-            >
-              <Typography
-                variant="h6"
-                noWrap
-                sx={{
-                  mr: 3,
-                  display: { xs: 'none', md: 'flex' },
-                  fontWeight: 700,
-                  letterSpacing: '.2rem',
-                  textDecoration: 'none',
-                  color: 'secondary',
-                }}
-              >
-                Products
-              </Typography>
-            </Link>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  sx={{
+                    mr: 3,
+                    display: { xs: 'none', md: 'flex' },
+                    fontWeight: 700,
+                    letterSpacing: '.3rem',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                  }}
+                >
+                  {page.text}
+                </Typography>
+              </Link>
+            ))}
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Cart">
               <IconButton sx={{ p: 0, marginRight: '1rem' }}>
