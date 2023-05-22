@@ -38,7 +38,7 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
   };
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth={false}>
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -98,6 +98,7 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
                 sx={{
                   height: 42,
                   marginRight: '0.5rem',
+                  display: { xs: 'none', md: 'flex' },
                 }}
                 alt="Your logo."
                 src={require('../assets/platzi.png')}
@@ -109,11 +110,11 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
                 className="link-item"
                 sx={{
                   mr: 2,
-                  display: { xs: 'none', md: 'flex' },
                   fontWeight: 700,
                   letterSpacing: '.3rem',
                   textDecoration: 'none',
                   color: 'inherit',
+                  display: { xs: 'none', md: 'flex' },
                 }}
               >
                 Platzi
@@ -152,16 +153,21 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Cart">
-              <IconButton sx={{ p: 0, marginRight: '1rem' }}>
-                <ShoppingCartIcon sx={{ fontSize: 40 }} color="secondary" />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Login">
-              <IconButton sx={{ p: 0, marginRight: '1rem' }}>
-                <AccountCircleIcon sx={{ fontSize: 40 }} color="secondary" />
-              </IconButton>
-            </Tooltip>
+            <Link to="/cart">
+              <Tooltip title="Cart">
+                <IconButton sx={{ p: 0, marginRight: '1rem' }}>
+                  <ShoppingCartIcon sx={{ fontSize: 40 }} color="secondary" />
+                  <span className="cart-value">12</span>{' '}
+                </IconButton>
+              </Tooltip>
+            </Link>
+            <Link to="/login">
+              <Tooltip title="Login">
+                <IconButton sx={{ p: 0, marginRight: '1rem' }}>
+                  <AccountCircleIcon sx={{ fontSize: 40 }} color="secondary" />
+                </IconButton>
+              </Tooltip>
+            </Link>
             <Tooltip title="Change Mode">
               <IconButton sx={{ p: 0 }} onClick={handleModeChange}>
                 {mode === 'light' ? (
