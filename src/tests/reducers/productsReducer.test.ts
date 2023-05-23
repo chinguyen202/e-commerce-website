@@ -14,9 +14,13 @@ describe('test products reducer functionality', () => {
     isLoading: false,
     isError: false,
     error: '',
-    filterOptions: null,
     productsByCategory: [],
     categories: [],
+    filterOptions: {
+      minPrice: 0,
+      maxPrice: 0,
+      category: null,
+    },
   };
   it('Check initial state', () => {
     expect(productsReducer(undefined, { type: 'unknown' })).toEqual(

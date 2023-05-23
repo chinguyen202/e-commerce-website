@@ -79,7 +79,11 @@ const CategoryList = () => {
       </Typography>
       <Carousel {...carouselSettings}>
         {categories.map((category) => (
-          <Link to="/products" style={{ textDecoration: 'none' }}>
+          <Link
+            key={category.id}
+            to="/products"
+            style={{ textDecoration: 'none' }}
+          >
             <Card
               key={category.id}
               sx={{ marginRight: '2rem', height: 350, width: 350 }}

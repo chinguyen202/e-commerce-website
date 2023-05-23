@@ -1,15 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import categoriesReducer from './reducers/categoriesSlice';
 import productsReducer from './reducers/productsSlice';
-// import productReducer from './reducers/productSlice';
-// import filterProductsReducer from './reducers/filterProductsSlice';
 
 const store = configureStore({
   reducer: {
     products: productsReducer,
-    // categories: categoriesReducer,
-    // product: productReducer,
-    // filters: filterProductsReducer,
   },
 });
 
@@ -20,5 +14,4 @@ export type AppDispatch = typeof store.dispatch;
 export * from './thunks/fetchCategories';
 export * from './thunks/fetchProducts';
 export * from './thunks/fetchSingleProduct';
-export * from './thunks/fetchProductsByCategory';
 export default store;

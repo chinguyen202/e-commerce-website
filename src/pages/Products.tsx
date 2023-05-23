@@ -24,7 +24,7 @@ const Products = () => {
 
   useEffect(() => {
     dispatch(fetchProducts());
-  }, [dispatch, allProducts, isSort, sortProducts]);
+  }, [dispatch, allProducts, isSort, sortProducts, isFilter, filterProducts]);
   return (
     <>
       <CurrentLocation name="Products" singleProduct={false} />
@@ -33,12 +33,23 @@ const Products = () => {
           <FilterProductsSideBar products={allProducts} />
         </Grid>
         <Grid item xs={9}>
-          <Sort products={allProducts} gridView={gridView} />
-          {isSort && (
-            <ProductList products={sortProducts} gridView={gridView} />
+          {isFilter && (
+            <>
+              <Sort products={filterProducts} gridView={gridView} />
+              <ProductList products={filterProducts} gridView={gridView} />
+            </>
           )}
-          {!(isSort && isFilter) && (
-            <ProductList products={allProducts} gridView={gridView} />
+          {isSort && !isFilter && (
+            <>
+              <Sort products={allProducts} gridView={gridView} />
+              <ProductList products={sortProducts} gridView={gridView} />
+            </>
+          )}
+          {!isSort && !isFilter && (
+            <>
+              <Sort products={allProducts} gridView={gridView} />
+              <ProductList products={allProducts} gridView={gridView} />
+            </>
           )}
         </Grid>
       </Grid>

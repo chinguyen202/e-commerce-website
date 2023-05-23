@@ -1,11 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ProductsState, SortPayload } from '../../types/Product';
-import {
-  fetchCategories,
-  fetchProducts,
-  fetchProductsByCategory,
-  fetchSingleProduct,
-} from '../store';
+import { ProductsState, SortPayload, FilterOptions } from '../../types/Product';
+import { Category } from '../../types/Category';
+import { fetchCategories, fetchProducts, fetchSingleProduct } from '../store';
 
 const initialState: ProductsState = {
   products: [],
@@ -18,9 +14,13 @@ const initialState: ProductsState = {
   isLoading: false,
   isError: false,
   error: '',
-  filterOptions: null,
   productsByCategory: [],
   categories: [],
+  filterOptions: {
+    minPrice: null,
+    maxPrice: null,
+    category: null,
+  },
 };
 
 const productsSlice = createSlice({
@@ -61,6 +61,53 @@ const productsSlice = createSlice({
     setGridView: (state, action: PayloadAction<boolean>) => {
       state.gridView = action.payload;
     },
+    searchProduct: (state, action: PayloadAction<string>) => {
+      const query = action.payload;
+      state.isFilter = true;
+      state.filterProducts = state.products.filter((product) =>
+        product.title.toLowerCase().includes(query.toLowerCase())
+      );
+    },
+    updateFilters: (state, action: PayloadAction<FilterOptions>) => {
+      const { minPrice, maxPrice, category } = action.payload;
+      state.isFilter = true;
+      state.filterOptions = {
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        category: category,
+      };
+    },
+    filterProduct: (state, action: PayloadAction<FilterOptions>) => {
+      const { category, minPrice, maxPrice } = action.payload;
+      if (state.filterProducts.length <= 0) {
+        if (category) {
+          state.filterProducts = state.products.filter(
+            (product) => product.category.id === category.id
+          );
+        }
+        if (minPrice && maxPrice) {
+          state.filterProducts = state.products.filter((product) => {
+            return product.price >= minPrice && product.price <= maxPrice;
+          });
+        }
+      } else {
+        if (category) {
+          state.filterProducts = state.filterProducts.filter(
+            (product) => product.category.id === category.id
+          );
+        }
+        if (minPrice !== null && maxPrice !== null) {
+          state.filterProducts = state.filterProducts.filter((product) => {
+            return product.price >= minPrice && product.price <= maxPrice;
+          });
+        }
+      }
+    },
+    clearFilters: (state, action) => {
+      state.filterProducts = initialState.filterProducts;
+      state.isFilter = initialState.isFilter;
+      state.filterOptions = initialState.filterOptions;
+    },
   },
   extraReducers(builder) {
     builder
@@ -99,18 +146,6 @@ const productsSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.error = action.error.message;
-      })
-      .addCase(fetchProductsByCategory.pending, (state, action) => {
-        state.isLoading = false;
-      })
-      .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.productsByCategory = action.payload;
-      })
-      .addCase(fetchProductsByCategory.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.error = action.error.message;
       });
   },
 });
@@ -118,4 +153,8 @@ const productsSlice = createSlice({
 const productsReducer = productsSlice.reducer;
 export const { sortProducts } = productsSlice.actions;
 export const { setGridView } = productsSlice.actions;
+export const { searchProduct } = productsSlice.actions;
+export const { updateFilters } = productsSlice.actions;
+export const { clearFilters } = productsSlice.actions;
+export const { filterProduct } = productsSlice.actions;
 export default productsReducer;

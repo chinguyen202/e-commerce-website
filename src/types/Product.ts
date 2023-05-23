@@ -9,12 +9,8 @@ export interface Product {
   images: string[];
 }
 export interface FilterOptions {
-  query: string;
-  price: string | null;
-  priceRange: {
-    minAmount: number;
-    maxAmount: number;
-  } | null;
+  minPrice: number | null;
+  maxPrice: number | null;
   category: Category | null;
 }
 export interface ProductsState {
@@ -28,7 +24,7 @@ export interface ProductsState {
   isFilter: boolean;
   isSort: boolean;
   gridView: boolean;
-  filterOptions: FilterOptions | null;
+  filterOptions: FilterOptions;
   categories: Category[];
   productsByCategory: Product[];
 }
