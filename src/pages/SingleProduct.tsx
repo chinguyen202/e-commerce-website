@@ -5,6 +5,7 @@ import {
   AddToCart,
   CurrentLocation,
   ErrorMessage,
+  Loading,
   ProductDetail,
   ProductImages,
 } from '../components';
@@ -21,10 +22,10 @@ const SingleProduct = () => {
 
   useEffect(() => {
     if (id) dispatch(fetchSingleProduct(id));
-  }, [dispatch]);
+  }, [id, dispatch]);
 
   if (productState.isLoading) {
-    return <Typography>Loading...</Typography>;
+    return <Loading />;
   }
 
   if (productState.isError) {

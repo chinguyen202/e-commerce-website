@@ -14,6 +14,7 @@ import AddToCart from './AddToCart';
 import ProductDetail from './ProductDetail';
 import ProductImages from './ProductImages';
 import FilterProductsSideBar from './FilterProductsSideBar';
+import Loading from './Loading';
 
 export {
   Footer,
@@ -32,4 +33,5 @@ export {
   ProductDetail,
   ProductImages,
   FilterProductsSideBar,
+  Loading,
 };
