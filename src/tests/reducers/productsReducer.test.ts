@@ -5,9 +5,16 @@ import { ProductsState } from '../../types/Product';
 describe('test products reducer functionality', () => {
   const initialState: ProductsState = {
     products: [],
-    isError: false,
+    product: null,
+    filterProducts: [],
+    sortedProducts: [],
+    isFilter: false,
+    isSort: false,
+    gridView: true,
     isLoading: false,
+    isError: false,
     error: '',
+    filterOptions: null,
   };
   it('Check initial state', () => {
     expect(productsReducer(undefined, { type: 'unknown' })).toEqual(

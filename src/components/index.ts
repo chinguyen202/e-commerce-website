@@ -15,6 +15,9 @@ import ProductDetail from './ProductDetail';
 import ProductImages from './ProductImages';
 import FilterProductsSideBar from './FilterProductsSideBar';
 import Loading from './Loading';
+import Sort from './Sort';
+import ProductsListView from './ProductsListView';
+import ProductsGridView from './ProductsGridView';
 
 export {
   Footer,
@@ -34,4 +37,7 @@ export {
   ProductImages,
   FilterProductsSideBar,
   Loading,
+  Sort,
+  ProductsListView,
+  ProductsGridView,
 };

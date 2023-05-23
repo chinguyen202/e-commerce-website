@@ -1,6 +1,5 @@
 import categoriesReducer from '../../store/reducers/categoriesSlice';
-import { fetchCategories } from '../../store/store';
-import fetchProductsByCategory from '../../store/thunks/fetchProductsByCategory';
+import { fetchCategories, fetchProductsByCategory } from '../../store/store';
 
 describe('test categories reducer', () => {
   const initialState = {

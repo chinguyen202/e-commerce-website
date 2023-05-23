@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { categoryUrl } from '../../utils/constants';
 
-const fetchProductsByCategory = createAsyncThunk(
+export const fetchProductsByCategory = createAsyncThunk(
   'categories/fetchProducts',
   async (id: number) => {
     try {
@@ -13,5 +13,3 @@ const fetchProductsByCategory = createAsyncThunk(
     }
   }
 );
-
-export default fetchProductsByCategory;

@@ -7,15 +7,24 @@ import {
   CurrentLocation,
   ProductList,
   FilterProductsSideBar,
+  Sort,
 } from '../components';
+import useThunk from '../hooks/useThunk';
 
 const Products = () => {
   const allProducts = useAppSelector((state) => state.products.products);
+  const gridView = useAppSelector((state) => state.products.gridView);
+  const isSort = useAppSelector((state) => state.products.isSort);
+  const sortProducts = useAppSelector((state) => state.products.sortedProducts);
+  const isFilter = useAppSelector((state) => state.products.isFilter);
+  const filterProducts = useAppSelector(
+    (state) => state.products.filterProducts
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchProducts());
-  }, [dispatch]);
+  }, [dispatch, allProducts, isSort, sortProducts]);
   return (
     <>
       <CurrentLocation name="Products" singleProduct={false} />
@@ -24,7 +33,13 @@ const Products = () => {
           <FilterProductsSideBar />
         </Grid>
         <Grid item xs={9}>
-          <ProductList products={allProducts} />
+          <Sort products={allProducts} gridView={gridView} />
+          {isSort && (
+            <ProductList products={sortProducts} gridView={gridView} />
+          )}
+          {!(isSort && isFilter) && (
+            <ProductList products={allProducts} gridView={gridView} />
+          )}
         </Grid>
       </Grid>
     </>

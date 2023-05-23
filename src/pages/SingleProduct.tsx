@@ -11,12 +11,12 @@ import {
 } from '../components';
 import useAppSelector from '../hooks/useAppSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
-import fetchSingleProduct from '../store/thunks/fetchSingleProduct';
+import { fetchSingleProduct } from '../store/store';
 
 const SingleProduct = () => {
   const { id } = useParams();
   console.log('Params - ', id);
-  const productState = useAppSelector((state) => state.product);
+  const productState = useAppSelector((state) => state.products);
   const product = productState.product;
   const dispatch = useAppDispatch();
 
