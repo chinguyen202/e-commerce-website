@@ -7,6 +7,7 @@ const initialState: ProductsState = {
   filterProduct: [],
   isError: false,
   isLoading: false,
+  error: '',
 };
 
 const productsSlice = createSlice({
@@ -23,6 +24,7 @@ const productsSlice = createSlice({
     });
     builder.addCase(fetchProducts.rejected, (state, action) => {
       state.isError = true;
+      state.error = action.error?.message || 'Unknown error occurred';
       state.isLoading = false;
     });
   },

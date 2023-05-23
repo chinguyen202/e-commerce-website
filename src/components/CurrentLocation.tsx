@@ -3,9 +3,10 @@ import { Container, Box, Typography, useTheme } from '@mui/material';
 
 type CurrentLocationProps = {
   name: string;
+  singleProduct: boolean;
 };
 
-const CurrentLocation = ({ name }: CurrentLocationProps) => {
+const CurrentLocation = ({ name, singleProduct }: CurrentLocationProps) => {
   const theme = useTheme();
   return (
     <Container
@@ -25,6 +26,19 @@ const CurrentLocation = ({ name }: CurrentLocationProps) => {
         >
           Home
         </Link>
+        {singleProduct ? (
+          <Link
+            to="/products"
+            style={{
+              textDecoration: 'none',
+              color: 'inherit',
+            }}
+          >
+            Product
+          </Link>
+        ) : (
+          <></>
+        )}
         /{name}
       </Typography>
     </Container>

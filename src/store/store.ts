@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import categoriesReducer from './reducers/categoriesSlice';
 import productsReducer from './reducers/productsSlice';
+import productReducer from './reducers/productSlice';
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
-    categories: categoriesReducer,
     products: productsReducer,
+    categories: categoriesReducer,
+    product: productReducer,
   },
 });
 
@@ -15,3 +17,6 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export * from './thunks/fetchCategories';
 export * from './thunks/fetchProducts';
+export * from './thunks/fetchSingleProduct';
+export * from './thunks/fetchProductsByCategory';
+export default store;

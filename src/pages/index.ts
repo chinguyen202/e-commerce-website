@@ -5,5 +5,15 @@ import Home from './Home';
 import Login from './Login';
 import Products from './Products';
 import SingleProduct from './SingleProduct';
+import Register from './Register';
 
-export { Checkout, Error, Login, Products, SingleProduct, Home, Cart };
+export {
+  Checkout,
+  Error,
+  Login,
+  Products,
+  SingleProduct,
+  Home,
+  Cart,
+  Register,
+};

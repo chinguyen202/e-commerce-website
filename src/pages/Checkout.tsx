@@ -1,5 +1,11 @@
+import { CurrentLocation } from '../components';
+
 const Checkout = () => {
-  return <div>Checkout</div>;
+  return (
+    <>
+      <CurrentLocation name="Checkout" singleProduct={false} />
+    </>
+  );
 };
 
 export default Checkout;

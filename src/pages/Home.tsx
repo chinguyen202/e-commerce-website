@@ -1,5 +1,15 @@
+import { CategoryList, Hero, SignupPromotion } from '../components';
+import Services from '../components/Services';
+
 const Home = () => {
-  return <div>Home Page</div>;
+  return (
+    <>
+      <Hero />
+      <CategoryList />
+      <Services />
+      <SignupPromotion />
+    </>
+  );
 };
 
 export default Home;

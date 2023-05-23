@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { UserForm } from '../components';
 import { RegistrationData } from '../types/FormData';
+import { CurrentLocation, UserForm } from '../components';
 
-const Login = () => {
+const Register = () => {
   const [formData, setFormData] = useState<RegistrationData>({
     name: '',
     email: '',
@@ -11,9 +11,9 @@ const Login = () => {
   });
   return (
     <>
+      <CurrentLocation name="Register" singleProduct={false} />
       <UserForm />
     </>
   );
 };
-
-export default Login;
+export default Register;

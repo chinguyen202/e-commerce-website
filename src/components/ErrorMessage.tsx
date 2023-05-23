@@ -1,10 +1,14 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 
-const ErrorMessage = () => {
+type Props = {
+  error?: string;
+};
+
+const ErrorMessage = ({ error }: Props) => {
   return (
     <Box>
-      <Typography>There is error</Typography>
+      <Typography>{error}</Typography>
     </Box>
   );
 };

@@ -1,29 +1,27 @@
-import productsReducer from '../../store/reducers/productsSlice';
-import { fetchProducts } from '../../store/store';
-import { ProductsState } from '../../types/Product';
+import productReducer from '../../store/reducers/productSlice';
+import fetchSingleProduct from '../../store/thunks/fetchSingleProduct';
 
-describe('test products reducer functionality', () => {
-  const initialState: ProductsState = {
-    products: [],
-    filterProduct: [],
-    isError: false,
+describe('test single product reducer functionality', () => {
+  const initialState = {
+    product: null,
     isLoading: false,
+    isError: false,
     error: '',
   };
-  it('Check initial state', () => {
-    expect(productsReducer(undefined, { type: 'unknown' })).toEqual(
+  it('check if initial state return correct', () => {
+    expect(productReducer(undefined, { type: 'unknown' })).toEqual(
       initialState
     );
   });
-  it('Check if it handles fetchProducts.pending', () => {
-    const action = { type: fetchProducts.pending.type };
-    const nextState = productsReducer(initialState, action);
+  it('Check if it handles fetchSingleProduct.pending', () => {
+    const action = { type: fetchSingleProduct.pending.type };
+    const nextState = productReducer(initialState, action);
     expect(nextState).toEqual({
       ...initialState,
       isLoading: true,
     });
   });
-  it('Check if it handles fetchProducts.fulfilled', () => {
+  it('Check if it handles fetchSingleProduct.fulfilled', () => {
     const mockPayload = [
       {
         id: 4,
@@ -43,21 +41,21 @@ describe('test products reducer functionality', () => {
       },
     ];
     const action = {
-      type: fetchProducts.fulfilled.type,
+      type: fetchSingleProduct.fulfilled.type,
       payload: mockPayload,
     };
-    const nextState = productsReducer(initialState, action);
+    const nextState = productReducer(initialState, action);
     expect(nextState).toEqual({
       ...initialState,
       isLoading: false,
-      products: mockPayload,
+      product: mockPayload,
     });
   });
   it('Check if it handles fetchProducts.rejected', () => {
     const action = {
-      type: fetchProducts.rejected.type,
+      type: fetchSingleProduct.rejected.type,
     };
-    const nextState = productsReducer(initialState, action);
+    const nextState = productReducer(initialState, action);
     expect(nextState).toEqual({
       ...initialState,
       isError: true,
