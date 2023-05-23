@@ -1,38 +1,64 @@
 import { useEffect } from 'react';
+import { Box, Container, Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import {
+  AddToCart,
+  CurrentLocation,
+  ErrorMessage,
+  ProductDetail,
+  ProductImages,
+} from '../components';
 import useAppSelector from '../hooks/useAppSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import fetchSingleProduct from '../store/thunks/fetchSingleProduct';
-import { Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import { CurrentLocation, ErrorMessage } from '../components';
 
 const SingleProduct = () => {
   const { id } = useParams();
   console.log('Params - ', id);
-  const product = useAppSelector((state) => state.product);
+  const productState = useAppSelector((state) => state.product);
+  const product = productState.product;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (id) dispatch(fetchSingleProduct(id));
   }, [dispatch]);
 
-  if (product.isLoading) {
+  if (productState.isLoading) {
     return <Typography>Loading...</Typography>;
   }
 
-  if (product.isError) {
-    return <ErrorMessage error={product.error} />;
+  if (productState.isError) {
+    return <ErrorMessage error={productState.error} />;
   }
   return (
     <>
       <CurrentLocation
-        name={product.product?.title || 'Unknown'}
+        name={product?.title || 'Unknown'}
         singleProduct={true}
       />
-      {product.product ? (
-        <Typography>{product.product.title}</Typography>
-      ) : (
-        <Typography>Error</Typography>
+      {product && (
+        <Container
+          maxWidth={false}
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            padding: '2rem',
+            marginBottom: '2rem',
+          }}
+        >
+          <Box sx={{ flex: '1' }}>
+            <ProductImages images={product.images} />
+          </Box>
+          <Box sx={{ flex: '1', paddingLeft: '2rem' }}>
+            <ProductDetail
+              title={product.title}
+              price={product.price}
+              description={product.description}
+              categoryName={product.category.name}
+            />
+            <AddToCart product={product} />
+          </Box>
+        </Container>
       )}
     </>
   );
