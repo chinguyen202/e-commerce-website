@@ -9,46 +9,68 @@ import {
   FilterProductsSideBar,
   Sort,
 } from '../components';
-import useThunk from '../hooks/useThunk';
 
 const Products = () => {
-  const allProducts = useAppSelector((state) => state.products.products);
-  const gridView = useAppSelector((state) => state.products.gridView);
-  const isSort = useAppSelector((state) => state.products.isSort);
-  const sortProducts = useAppSelector((state) => state.products.sortedProducts);
-  const isFilter = useAppSelector((state) => state.products.isFilter);
-  const filterProducts = useAppSelector(
-    (state) => state.products.filterProducts
-  );
+  const {
+    products,
+    gridView,
+    isSort,
+    sortedProducts,
+    isFilter,
+    filterProducts,
+    filterOptions,
+  } = useAppSelector((state) => state.products);
+  // const allProducts = useAppSelector((state) => state.products.products);
+  // const gridView = useAppSelector((state) => state.products.gridView);
+  // const isSort = useAppSelector((state) => state.products.isSort);
+  // const sortProducts = useAppSelector((state) => state.products.sortedProducts);
+  // const isFilter = useAppSelector((state) => state.products.isFilter);
+  // const filterProducts = useAppSelector(
+  //   (state) => state.products.filterProducts
+  // );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchProducts());
-  }, [dispatch, allProducts, isSort, sortProducts, isFilter, filterProducts]);
+  }, [
+    dispatch,
+    products,
+    isSort,
+    sortedProducts,
+    isFilter,
+    filterProducts,
+    filterOptions,
+  ]);
   return (
     <>
       <CurrentLocation name="Products" singleProduct={false} />
       <Grid container spacing={2}>
         <Grid item xs={3}>
-          <FilterProductsSideBar products={allProducts} />
+          <FilterProductsSideBar products={products} />
         </Grid>
         <Grid item xs={9}>
-          {isFilter && (
+          {isFilter && !isSort && (
             <>
               <Sort products={filterProducts} gridView={gridView} />
               <ProductList products={filterProducts} gridView={gridView} />
             </>
           )}
+          {isFilter && isSort && (
+            <>
+              <Sort products={filterProducts} gridView={gridView} />
+              <ProductList products={sortedProducts} gridView={gridView} />
+            </>
+          )}
           {isSort && !isFilter && (
             <>
-              <Sort products={allProducts} gridView={gridView} />
-              <ProductList products={sortProducts} gridView={gridView} />
+              <Sort products={products} gridView={gridView} />
+              <ProductList products={sortedProducts} gridView={gridView} />
             </>
           )}
           {!isSort && !isFilter && (
             <>
-              <Sort products={allProducts} gridView={gridView} />
-              <ProductList products={allProducts} gridView={gridView} />
+              <Sort products={products} gridView={gridView} />
+              <ProductList products={products} gridView={gridView} />
             </>
           )}
         </Grid>

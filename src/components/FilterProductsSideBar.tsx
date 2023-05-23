@@ -19,7 +19,8 @@ import {
   updateFilters,
   clearFilters,
   searchProduct,
-  filterProduct,
+  filterProductByCategory,
+  filterProductByPriceRange,
 } from '../store/reducers/productsSlice';
 import { Category } from '../types/Category';
 
@@ -49,18 +50,12 @@ const FilterProductsSideBar = ({ products }: ProductsProps) => {
       setSelectedCategory(selectedCategory);
       dispatch(
         updateFilters({
-          minPrice: priceRange[0],
-          maxPrice: priceRange[1],
+          minPrice: 0,
+          maxPrice: maxPrice,
           category: selectedCategory || null,
         })
       );
-      dispatch(
-        filterProduct({
-          minPrice: priceRange[0],
-          maxPrice: priceRange[1],
-          category: selectedCategory || null,
-        })
-      );
+      dispatch(filterProductByCategory(selectedCategory));
     }
   };
 
@@ -72,6 +67,13 @@ const FilterProductsSideBar = ({ products }: ProductsProps) => {
     setPriceRange(newPriceRange);
     dispatch(
       updateFilters({
+        minPrice: newPriceRange[0],
+        maxPrice: newPriceRange[1],
+        category: selectedCategory || null,
+      })
+    );
+    dispatch(
+      filterProductByPriceRange({
         minPrice: newPriceRange[0],
         maxPrice: newPriceRange[1],
         category: selectedCategory || null,

@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ProductsState, SortPayload, FilterOptions } from '../../types/Product';
-import { Category } from '../../types/Category';
 import { fetchCategories, fetchProducts, fetchSingleProduct } from '../store';
+import { Product } from '../../types/Product';
+import { Category } from '../../types/Category';
 
 const initialState: ProductsState = {
   products: [],
@@ -31,27 +32,51 @@ const productsSlice = createSlice({
       const { sortType } = action.payload;
       switch (sortType) {
         case 'NAME_ASC':
-          state.sortedProducts = [...state.products].sort((a, b) =>
-            a.title.localeCompare(b.title)
-          );
+          if (state.isFilter) {
+            state.sortedProducts = [...state.filterProducts].sort((a, b) =>
+              a.title.localeCompare(b.title)
+            );
+          } else {
+            state.sortedProducts = [...state.products].sort((a, b) =>
+              a.title.localeCompare(b.title)
+            );
+          }
           state.isSort = true;
           break;
         case 'NAME_DESC':
-          state.sortedProducts = [...state.products].sort((a, b) =>
-            b.title.localeCompare(a.title)
-          );
+          if (state.isFilter) {
+            state.sortedProducts = [...state.filterProducts].sort((a, b) =>
+              b.title.localeCompare(a.title)
+            );
+          } else {
+            state.sortedProducts = [...state.products].sort((a, b) =>
+              b.title.localeCompare(a.title)
+            );
+          }
           state.isSort = true;
           break;
         case 'PRICE_HIGHEST':
-          state.sortedProducts = [...state.products].sort(
-            (a, b) => b.price - a.price
-          );
+          if (state.isFilter) {
+            state.sortedProducts = [...state.filterProducts].sort(
+              (a, b) => b.price - a.price
+            );
+          } else {
+            state.sortedProducts = [...state.products].sort(
+              (a, b) => b.price - a.price
+            );
+          }
           state.isSort = true;
           break;
         case 'PRICE_LOWEST':
-          state.sortedProducts = [...state.products].sort(
-            (a, b) => a.price - b.price
-          );
+          if (state.isFilter) {
+            state.sortedProducts = [...state.filterProducts].sort(
+              (a, b) => a.price - b.price
+            );
+          } else {
+            state.sortedProducts = [...state.products].sort(
+              (a, b) => a.price - b.price
+            );
+          }
           state.isSort = true;
           break;
         default:
@@ -71,24 +96,20 @@ const productsSlice = createSlice({
     updateFilters: (state, action: PayloadAction<FilterOptions>) => {
       const { minPrice, maxPrice, category } = action.payload;
       state.isFilter = true;
+      state.isSort = false;
       state.filterOptions = {
         minPrice: minPrice,
         maxPrice: maxPrice,
         category: category,
       };
     },
-    filterProduct: (state, action: PayloadAction<FilterOptions>) => {
-      const { category, minPrice, maxPrice } = action.payload;
+    filterProductByCategory: (state, action: PayloadAction<Category>) => {
+      const category = action.payload;
       if (state.filterProducts.length <= 0) {
         if (category) {
           state.filterProducts = state.products.filter(
             (product) => product.category.id === category.id
           );
-        }
-        if (minPrice && maxPrice) {
-          state.filterProducts = state.products.filter((product) => {
-            return product.price >= minPrice && product.price <= maxPrice;
-          });
         }
       } else {
         if (category) {
@@ -96,7 +117,21 @@ const productsSlice = createSlice({
             (product) => product.category.id === category.id
           );
         }
-        if (minPrice !== null && maxPrice !== null) {
+      }
+    },
+    filterProductByPriceRange: (
+      state,
+      action: PayloadAction<FilterOptions>
+    ) => {
+      const { minPrice, maxPrice } = action.payload;
+      if (state.filterProducts.length <= 0) {
+        if (minPrice && maxPrice) {
+          state.filterProducts = state.products.filter((product) => {
+            return product.price >= minPrice && product.price <= maxPrice;
+          });
+        }
+      } else {
+        if (minPrice && maxPrice) {
           state.filterProducts = state.filterProducts.filter((product) => {
             return product.price >= minPrice && product.price <= maxPrice;
           });
@@ -106,6 +141,7 @@ const productsSlice = createSlice({
     clearFilters: (state, action) => {
       state.filterProducts = initialState.filterProducts;
       state.isFilter = initialState.isFilter;
+      state.isSort = initialState.isSort;
       state.filterOptions = initialState.filterOptions;
     },
   },
@@ -156,5 +192,6 @@ export const { setGridView } = productsSlice.actions;
 export const { searchProduct } = productsSlice.actions;
 export const { updateFilters } = productsSlice.actions;
 export const { clearFilters } = productsSlice.actions;
-export const { filterProduct } = productsSlice.actions;
+export const { filterProductByCategory } = productsSlice.actions;
+export const { filterProductByPriceRange } = productsSlice.actions;
 export default productsReducer;
