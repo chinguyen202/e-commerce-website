@@ -15,6 +15,8 @@ describe('test products reducer functionality', () => {
     isError: false,
     error: '',
     filterOptions: null,
+    productsByCategory: [],
+    categories: [],
   };
   it('Check initial state', () => {
     expect(productsReducer(undefined, { type: 'unknown' })).toEqual(

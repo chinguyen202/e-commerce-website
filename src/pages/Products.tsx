@@ -30,7 +30,7 @@ const Products = () => {
       <CurrentLocation name="Products" singleProduct={false} />
       <Grid container spacing={2}>
         <Grid item xs={3}>
-          <FilterProductsSideBar />
+          <FilterProductsSideBar products={allProducts} />
         </Grid>
         <Grid item xs={9}>
           <Sort products={allProducts} gridView={gridView} />

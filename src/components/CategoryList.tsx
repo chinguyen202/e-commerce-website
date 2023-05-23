@@ -44,18 +44,21 @@ const carouselSettings = {
 
 const CategoryList = () => {
   const theme = useTheme();
-  const categories = useAppSelector((state) => state.categories);
+  const categories = useAppSelector((state) => state.products.categories);
+  const isLoading = useAppSelector((state) => state.products.isLoading);
+  const error = useAppSelector((state) => state.products.error);
+  const isError = useAppSelector((state) => state.products.isError);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
-  if (categories.isLoading) {
+  if (isLoading) {
     return <Typography>Loading...</Typography>;
   }
 
-  if (categories.isError) {
+  if (isError) {
     return <ErrorMessage />;
   }
 
@@ -75,7 +78,7 @@ const CategoryList = () => {
         Categories
       </Typography>
       <Carousel {...carouselSettings}>
-        {categories.categories.map((category) => (
+        {categories.map((category) => (
           <Link to="/products" style={{ textDecoration: 'none' }}>
             <Card
               key={category.id}

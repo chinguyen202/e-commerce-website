@@ -1,6 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ProductsState, SortPayload } from '../../types/Product';
-import { fetchProducts, fetchSingleProduct } from '../store';
+import {
+  fetchCategories,
+  fetchProducts,
+  fetchProductsByCategory,
+  fetchSingleProduct,
+} from '../store';
 
 const initialState: ProductsState = {
   products: [],
@@ -14,6 +19,8 @@ const initialState: ProductsState = {
   isError: false,
   error: '',
   filterOptions: null,
+  productsByCategory: [],
+  categories: [],
 };
 
 const productsSlice = createSlice({
@@ -80,6 +87,30 @@ const productsSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.error = action.error?.message || 'Unknown error occurred';
+      })
+      .addCase(fetchCategories.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchCategories.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.categories = action.payload;
+      })
+      .addCase(fetchCategories.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.error = action.error.message;
+      })
+      .addCase(fetchProductsByCategory.pending, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.productsByCategory = action.payload;
+      })
+      .addCase(fetchProductsByCategory.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.error = action.error.message;
       });
   },
 });
