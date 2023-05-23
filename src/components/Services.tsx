@@ -3,15 +3,15 @@ import { Grid, Box, Typography, useTheme } from '@mui/material';
 const Services = () => {
   const theme = useTheme();
   return (
-    <>
+    <Box sx={{ bgcolor: theme.palette.primary.main }}>
       <Box
         textAlign="center"
         sx={{
           color: theme.palette.secondary.main,
-          marginTop: '2rem',
+          marginTop: '3rem',
         }}
       >
-        <Typography variant="h2">Our services</Typography>
+        <Typography variant="h3">Our services</Typography>
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4}>
@@ -54,7 +54,7 @@ const Services = () => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Box>
   );
 };
 

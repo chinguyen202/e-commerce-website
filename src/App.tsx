@@ -9,8 +9,9 @@ import {
   Products,
   SingleProduct,
   Error,
+  Register,
 } from './pages';
-import { Navbar, Sidebar, Footer } from './components';
+import { Navbar, Footer } from './components';
 
 const App = () => {
   const [mode, setMode] = useState<'light' | 'dark'>('light');
@@ -19,6 +20,9 @@ const App = () => {
     palette:
       mode === 'light'
         ? {
+            background: {
+              default: '#a3b18a',
+            },
             primary: {
               main: '#fffffc',
             },
@@ -27,13 +31,12 @@ const App = () => {
             },
             error: {
               main: '#9d0208',
-            },
-            action: {
-              active: '#344e41',
-              selected: '#344e41',
             },
           }
         : {
+            background: {
+              default: '#fffffc',
+            },
             primary: {
               main: '#344e41',
             },
@@ -42,10 +45,6 @@ const App = () => {
             },
             error: {
               main: '#9d0208',
-            },
-            action: {
-              active: '#fffffc',
-              selected: '#fffffc',
             },
           },
   });
@@ -53,10 +52,10 @@ const App = () => {
     <ThemeProvider theme={dynamicTheme}>
       <Router>
         <Navbar mode={mode} setMode={setMode} />
-        <Sidebar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<SingleProduct />} />

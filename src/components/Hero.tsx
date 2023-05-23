@@ -57,6 +57,7 @@ const Hero = () => {
         <Box
           component="img"
           sx={{
+            bgcolor: theme.palette.primary.main,
             width: '100%',
             height: '100%',
             objectFit: 'cover',

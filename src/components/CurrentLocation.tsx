@@ -26,7 +26,7 @@ const CurrentLocation = ({ name, singleProduct }: CurrentLocationProps) => {
         >
           Home
         </Link>
-        {singleProduct ? (
+        {singleProduct && (
           <Link
             to="/products"
             style={{
@@ -34,12 +34,10 @@ const CurrentLocation = ({ name, singleProduct }: CurrentLocationProps) => {
               color: 'inherit',
             }}
           >
-            Product
+            / Products
           </Link>
-        ) : (
-          <></>
         )}
-        /{name}
+        / {name}
       </Typography>
     </Container>
   );
