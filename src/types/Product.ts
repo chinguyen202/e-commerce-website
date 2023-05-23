@@ -13,7 +13,6 @@ export interface ProductsState {
   products: Product[];
   isLoading: boolean;
   isError: boolean;
-  filterProduct: Product[];
   error?: string;
 }
 

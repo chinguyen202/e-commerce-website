@@ -1,8 +1,13 @@
 import { useEffect } from 'react';
+import { Grid } from '@mui/material';
 import useAppSelector from '../hooks/useAppSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { fetchProducts } from '../store/store';
-import { CurrentLocation, ProductList } from '../components';
+import {
+  CurrentLocation,
+  ProductList,
+  FilterProductsSideBar,
+} from '../components';
 
 const Products = () => {
   const allProducts = useAppSelector((state) => state.products.products);
@@ -14,7 +19,14 @@ const Products = () => {
   return (
     <>
       <CurrentLocation name="Products" singleProduct={false} />
-      <ProductList products={allProducts} />
+      <Grid container spacing={2}>
+        <Grid item xs={3}>
+          <FilterProductsSideBar />
+        </Grid>
+        <Grid item xs={9}>
+          <ProductList products={allProducts} />
+        </Grid>
+      </Grid>
     </>
   );
 };

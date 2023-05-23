@@ -5,7 +5,6 @@ import { ProductsState } from '../../types/Product';
 describe('test products reducer functionality', () => {
   const initialState: ProductsState = {
     products: [],
-    filterProduct: [],
     isError: false,
     isLoading: false,
     error: '',

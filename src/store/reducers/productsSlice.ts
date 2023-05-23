@@ -4,7 +4,6 @@ import { fetchProducts } from '../store';
 
 const initialState: ProductsState = {
   products: [],
-  filterProduct: [],
   isError: false,
   isLoading: false,
   error: '',

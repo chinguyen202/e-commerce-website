@@ -8,11 +8,12 @@ import Services from './Services';
 import SignupPromotion from './SignupPromotion';
 import UserForm from './UserForm';
 import ErrorMessage from './ErrorMessage';
-import ProductItem from './ProductItem';
+import ProductGridItem from './ProductGridItem';
 import ProductList from './ProductList';
 import AddToCart from './AddToCart';
 import ProductDetail from './ProductDetail';
 import ProductImages from './ProductImages';
+import FilterProductsSideBar from './FilterProductsSideBar';
 
 export {
   Footer,
@@ -25,9 +26,10 @@ export {
   SignupPromotion,
   UserForm,
   ErrorMessage,
-  ProductItem,
+  ProductGridItem,
   ProductList,
   AddToCart,
   ProductDetail,
   ProductImages,
+  FilterProductsSideBar,
 };
