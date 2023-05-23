@@ -29,23 +29,24 @@ const ProductImages = ({ images }: Props) => {
           margin: '2rem',
         }}
       >
-        {images.map((image, index) => (
-          <Box
-            onClick={() => setMain(image)}
-            key={index}
-            component="img"
-            sx={{
-              width: `calc(100% / ${images.length})`,
-              height: 'auto',
-              objectFit: 'cover',
-              marginRight: '2rem',
-              borderRadius: '1rem',
-              display: { xs: 'none', md: 'flex' },
-            }}
-            alt="product image"
-            src={image}
-          />
-        ))}
+        {images.length > 1 &&
+          images.map((image, index) => (
+            <Box
+              onClick={() => setMain(image)}
+              key={index}
+              component="img"
+              sx={{
+                width: `calc(100% / ${images.length})`,
+                height: 'auto',
+                objectFit: 'cover',
+                marginRight: '2rem',
+                borderRadius: '1rem',
+                display: { xs: 'none', md: 'flex' },
+              }}
+              alt="product image"
+              src={image}
+            />
+          ))}
       </Box>
     </Box>
   );
