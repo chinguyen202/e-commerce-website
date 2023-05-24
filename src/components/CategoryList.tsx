@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -14,6 +13,11 @@ import useAppSelector from '../hooks/useAppSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { fetchCategories } from '../store/store';
 import { ErrorMessage } from '../components';
+import { Category } from '../types/Category';
+import {
+  filterProductByCategory,
+  updateFilters,
+} from '../store/reducers/productsSlice';
 
 const carouselSettings = {
   responsive: {
@@ -42,25 +46,12 @@ const carouselSettings = {
   swipeable: true,
 };
 
-const CategoryList = () => {
+type CategoryListProps = {
+  categories: Category[];
+};
+
+const CategoryList = ({ categories }: CategoryListProps) => {
   const theme = useTheme();
-  const categories = useAppSelector((state) => state.products.categories);
-  const isLoading = useAppSelector((state) => state.products.isLoading);
-  const error = useAppSelector((state) => state.products.error);
-  const isError = useAppSelector((state) => state.products.isError);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
-
-  if (isLoading) {
-    return <Typography>Loading...</Typography>;
-  }
-
-  if (isError) {
-    return <ErrorMessage />;
-  }
 
   return (
     <Box
@@ -79,28 +70,22 @@ const CategoryList = () => {
       </Typography>
       <Carousel {...carouselSettings}>
         {categories.map((category) => (
-          <Link
+          <Card
             key={category.id}
-            to="/products"
-            style={{ textDecoration: 'none' }}
+            sx={{ marginRight: '2rem', height: 350, width: 350 }}
           >
-            <Card
-              key={category.id}
-              sx={{ marginRight: '2rem', height: 350, width: 350 }}
-            >
-              <CardMedia
-                component="img"
-                sx={{ height: 300, aspectRatio: 1 }}
-                image={category.image}
-                alt={category.name}
-              />
-              <CardContent>
-                <Typography variant="h6" component="div">
-                  {category.name}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Link>
+            <CardMedia
+              component="img"
+              sx={{ height: 300, aspectRatio: 1 }}
+              image={category.image}
+              alt={category.name}
+            />
+            <CardContent>
+              <Typography variant="h6" component="div">
+                {category.name}
+              </Typography>
+            </CardContent>
+          </Card>
         ))}
       </Carousel>
     </Box>
