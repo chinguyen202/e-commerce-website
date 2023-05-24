@@ -1,23 +1,28 @@
-import { TextField, Container, InputAdornment } from '@mui/material';
+import { KeyboardEvent, ChangeEvent } from 'react';
+import { TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 type SearchBoxProps = {
   query: string;
-  setQuery: (query: string) => void;
+  setQuery: (event: ChangeEvent<HTMLInputElement>) => void;
   handleSearch: () => void;
 };
 
 const SearchBox = ({ setQuery, query, handleSearch }: SearchBoxProps) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
   return (
-    <Container>
+    <>
       <TextField
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        onKeyPress={handleSearch}
+        onKeyDown={handleKeyDown}
+        onChange={setQuery}
         placeholder="Search..."
         variant="outlined"
         size="medium"
-        sx={{}}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -26,7 +31,7 @@ const SearchBox = ({ setQuery, query, handleSearch }: SearchBoxProps) => {
           ),
         }}
       />
-    </Container>
+    </>
   );
 };
 

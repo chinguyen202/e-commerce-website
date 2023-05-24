@@ -18,8 +18,8 @@ const initialState: ProductsState = {
   productsByCategory: [],
   categories: [],
   filterOptions: {
-    minPrice: null,
-    maxPrice: null,
+    minPrice: 0,
+    maxPrice: 0,
     category: null,
   },
 };
@@ -124,18 +124,15 @@ const productsSlice = createSlice({
       action: PayloadAction<FilterOptions>
     ) => {
       const { minPrice, maxPrice } = action.payload;
-      if (state.filterProducts.length <= 0) {
-        if (minPrice && maxPrice) {
-          state.filterProducts = state.products.filter((product) => {
-            return product.price >= minPrice && product.price <= maxPrice;
-          });
-        }
+      if (state.filterProducts.length === 0) {
+        console.log('TEST MIN');
+        state.filterProducts = state.products.filter((product) => {
+          return product.price >= minPrice && product.price <= maxPrice;
+        });
       } else {
-        if (minPrice && maxPrice) {
-          state.filterProducts = state.filterProducts.filter((product) => {
-            return product.price >= minPrice && product.price <= maxPrice;
-          });
-        }
+        state.filterProducts = state.filterProducts.filter((product) => {
+          return product.price >= minPrice && product.price <= maxPrice;
+        });
       }
     },
     clearFilters: (state, action) => {

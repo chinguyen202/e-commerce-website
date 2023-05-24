@@ -1,13 +1,12 @@
-import { useState } from 'react';
-import { ProductsProps } from '../types/Product';
+import { useEffect, useState, ChangeEvent } from 'react';
 import {
   Container,
   Typography,
   Box,
-  Slider,
   FormGroup,
   Checkbox,
   FormControlLabel,
+  TextField,
   useTheme,
   Button,
 } from '@mui/material';
@@ -15,9 +14,9 @@ import SearchBox from './SearchBox';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import useAppSelector from '../hooks/useAppSelector';
 import { fetchCategories } from '../store/store';
+import { ProductsProps } from '../types/Product';
 import {
   updateFilters,
-  clearFilters,
   searchProduct,
   filterProductByCategory,
   filterProductByPriceRange,
@@ -27,18 +26,24 @@ import { Category } from '../types/Category';
 const FilterProductsSideBar = ({ products }: ProductsProps) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  const maxPrice = Math.max(...products.map((p) => p.price));
+  // const maxPrice = Math.max(...products.map((p) => p.price));
   const categories = useAppSelector((state) => state.products.categories);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
   );
-  const [priceRange, setPriceRange] = useState([0, maxPrice]);
-  if (categories.length === 0) {
-    dispatch(fetchCategories());
-  }
+  const [priceRange, setPriceRange] = useState([0, 0]);
+
+  useEffect(() => {
+    if (categories.length === 0) dispatch(fetchCategories());
+  });
+  const setQuery = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setSearchQuery(e.target.value);
+  };
   const handleSearch = () => {
     dispatch(searchProduct(searchQuery));
+    setSearchQuery('');
   };
 
   const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,8 +55,8 @@ const FilterProductsSideBar = ({ products }: ProductsProps) => {
       setSelectedCategory(selectedCategory);
       dispatch(
         updateFilters({
-          minPrice: 0,
-          maxPrice: maxPrice,
+          minPrice: priceRange[0],
+          maxPrice: priceRange[1],
           category: selectedCategory || null,
         })
       );
@@ -59,33 +64,29 @@ const FilterProductsSideBar = ({ products }: ProductsProps) => {
     }
   };
 
-  const handlePriceRangeChange = (
-    event: Event,
-    newValue: number | number[]
-  ) => {
-    const newPriceRange = newValue as number[];
-    setPriceRange(newPriceRange);
+  const handlePriceRangeChange = () => {
     dispatch(
       updateFilters({
-        minPrice: newPriceRange[0],
-        maxPrice: newPriceRange[1],
+        minPrice: priceRange[0],
+        maxPrice: priceRange[1],
         category: selectedCategory || null,
       })
     );
     dispatch(
       filterProductByPriceRange({
-        minPrice: newPriceRange[0],
-        maxPrice: newPriceRange[1],
+        minPrice: priceRange[0],
+        maxPrice: priceRange[1],
         category: selectedCategory || null,
       })
     );
   };
 
   const clearFilters = () => {
-    setPriceRange([0, maxPrice]);
+    setPriceRange([0, 0]);
     setSelectedCategory(null);
     dispatch({ type: 'products/clearFilters' });
   };
+
   return (
     <Container
       maxWidth={false}
@@ -95,9 +96,9 @@ const FilterProductsSideBar = ({ products }: ProductsProps) => {
       }}
     >
       <SearchBox
-        setQuery={setSearchQuery}
-        query={searchQuery}
         handleSearch={handleSearch}
+        query={searchQuery}
+        setQuery={setQuery}
       />
       <Box sx={{ mt: '2rem' }}>
         <Typography variant="h6">Categories</Typography>
@@ -121,14 +122,6 @@ const FilterProductsSideBar = ({ products }: ProductsProps) => {
         Price Range:
       </Typography>
       <Box sx={{ width: '80%', mt: '2rem' }}>
-        <Slider
-          value={priceRange}
-          onChange={handlePriceRangeChange}
-          valueLabelDisplay="auto"
-          min={0}
-          max={Math.max(...products.map((p) => p.price))}
-          sx={{ color: theme.palette.secondary.main }}
-        />
         <Box
           sx={{
             display: 'flex',
@@ -136,19 +129,36 @@ const FilterProductsSideBar = ({ products }: ProductsProps) => {
             justifyContent: 'space-between',
           }}
         >
-          <Typography
-            variant="body1"
-            sx={{ mt: 2, fontSize: '1.2rem', fontWeight: '500' }}
-          >
-            {priceRange[0]}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ mt: 2, fontSize: '1.2rem', fontWeight: '500' }}
-          >
-            {priceRange[1]}
-          </Typography>
+          <TextField
+            type="number"
+            value={priceRange[0]} // Convert number to string
+            onChange={(e) =>
+              setPriceRange([parseInt(e.target.value), priceRange[1]])
+            }
+            label="Min Price"
+            variant="outlined"
+          />
+          <TextField
+            type="number"
+            value={priceRange[1]} // Convert number to string
+            onChange={(e) =>
+              setPriceRange([priceRange[0], parseInt(e.target.value)])
+            }
+            label="Max Price"
+            variant="outlined"
+          />
         </Box>
+        <Button
+          variant="outlined"
+          onClick={handlePriceRangeChange}
+          sx={{
+            color: theme.palette.primary.main,
+            bgcolor: theme.palette.secondary.main,
+            mt: '1rem',
+          }}
+        >
+          Apply Price Range
+        </Button>
       </Box>
       <Box sx={{ mt: '2rem' }}>
         <Button
