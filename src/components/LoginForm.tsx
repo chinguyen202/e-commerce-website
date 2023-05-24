@@ -1,3 +1,4 @@
+import { ChangeEvent, useState } from 'react';
 import {
   Grid,
   Link,
@@ -6,21 +7,31 @@ import {
   Avatar,
   Typography,
   Button,
-  TextField,
-  FormControlLabel,
-  Checkbox,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { FormRow } from '../components';
+
+const initialValues = {
+  email: '',
+  password: '',
+};
 
 const LoginForm = () => {
+  const [values, setValues] = useState(initialValues);
+  const dispatch = useAppDispatch();
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    console.log(event.target);
   };
+
   return (
     <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
       <Box
@@ -38,30 +49,13 @@ const LoginForm = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <FormRow
+            labelText="Password"
             name="password"
-            label="Password"
             type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            value={values.password}
+            handleChange={handleChange}
           />
           <Button
             type="submit"

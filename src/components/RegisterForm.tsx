@@ -1,3 +1,4 @@
+import { useState, ChangeEvent, FormEvent } from 'react';
 import {
   Box,
   Avatar,
@@ -8,17 +9,73 @@ import {
   Link,
   Paper,
 } from '@mui/material';
+import { toast } from 'react-toastify';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { FormRow, UploadFileForm } from '../components';
+import { registerUser } from '../store/thunks/loginUser';
+
+const initialValues = {
+  name: '',
+  email: '',
+  password: '',
+  avatar: '',
+};
 
 const RegisterForm = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const dispatch = useAppDispatch();
+  const [values, setValues] = useState(initialValues);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
   };
+
+  const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setAvatarFile(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      if (avatarFile) {
+        const formData = new FormData();
+        formData.append('file', avatarFile);
+        // const response = await fetch(
+        //   'https://api.escuelajs.co/api/v1/files/upload',
+        //   {
+        //     method: 'POST',
+        //     body: formData,
+        //   }
+        // );
+        // const data = await response.json();
+        // const { location } = data;
+        // setValues((prevValues) => ({
+        //   ...prevValues,
+        //   avatar: location,
+        // }));
+      }
+
+      // dispatch(registerUser(values))
+      //   .then(() => {
+      //     toast.success('Registration successful!');
+      //   })
+      //   .catch((error) => {
+      //     toast.error('Registration failed.');
+      //     console.error('Registration error:', error);
+      //   });
+    } catch (error) {
+      toast.error('Avatar upload failed.');
+      console.error('Avatar upload error:', error);
+    }
+  };
+
   return (
     <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
       <Box
@@ -37,37 +94,37 @@ const RegisterForm = () => {
           Sign Up
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Name"
+          {/* Name field */}
+          <FormRow
+            labelText="Name"
             name="name"
-            autoComplete="name"
-            autoFocus
+            type="text"
+            value={values.name}
+            handleChange={handleChange}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
+          {/* email field */}
+          <FormRow
+            labelText="Email Address"
             name="email"
-            autoComplete="email"
-            autoFocus
+            type="email"
+            value={values.email}
+            handleChange={handleChange}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
+          {/* password field */}
+          <FormRow
+            labelText="Password"
             name="password"
-            label="Password"
             type="password"
-            id="password"
-            autoComplete="current-password"
+            value={values.password}
+            handleChange={handleChange}
           />
-
+          {/* upload avatar form */}
+          <TextField
+            type="file"
+            fullWidth
+            onChange={handleAvatarChange}
+            inputProps={{ accept: 'image/*' }} // specify accepted file types, e.g., images
+          />
           <Button
             type="submit"
             fullWidth
