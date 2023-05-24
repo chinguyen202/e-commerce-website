@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/ReactToastify.min.css';
+
 import {
   Home,
   Cart,
@@ -60,6 +63,7 @@ const App = () => {
   return (
     <ThemeProvider theme={dynamicTheme}>
       <Router>
+        <ToastContainer position="top-center" />
         <Navbar mode={mode} setMode={setMode} />
         <Routes>
           <Route path="/" element={<Home />} />
