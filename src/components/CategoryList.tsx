@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -14,6 +13,11 @@ import useAppSelector from '../hooks/useAppSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { fetchCategories } from '../store/store';
 import { ErrorMessage } from '../components';
+import { Category } from '../types/Category';
+import {
+  filterProductByCategory,
+  updateFilters,
+} from '../store/reducers/productsSlice';
 
 const carouselSettings = {
   responsive: {
@@ -42,25 +46,23 @@ const carouselSettings = {
   swipeable: true,
 };
 
-const CategoryList = () => {
+type CategoryListProps = {
+  categories: Category[];
+};
+
+const CategoryList = ({ categories }: CategoryListProps) => {
   const theme = useTheme();
-  const categories = useAppSelector((state) => state.products.categories);
-  const isLoading = useAppSelector((state) => state.products.isLoading);
-  const error = useAppSelector((state) => state.products.error);
-  const isError = useAppSelector((state) => state.products.isError);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
-
-  if (isLoading) {
-    return <Typography>Loading...</Typography>;
-  }
-
-  if (isError) {
-    return <ErrorMessage />;
-  }
+  const displayProductByCategory = (category: Category) => {
+    dispatch(
+      updateFilters({
+        category: category,
+        minPrice: 0,
+        maxPrice: 0,
+      })
+    );
+    dispatch(filterProductByCategory(category));
+  };
 
   return (
     <Box
@@ -87,6 +89,7 @@ const CategoryList = () => {
             <Card
               key={category.id}
               sx={{ marginRight: '2rem', height: 350, width: 350 }}
+              onClick={() => displayProductByCategory(category)}
             >
               <CardMedia
                 component="img"
