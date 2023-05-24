@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import {
@@ -9,15 +8,7 @@ import {
   CardContent,
   useTheme,
 } from '@mui/material';
-import useAppSelector from '../hooks/useAppSelector';
-import { useAppDispatch } from '../hooks/useAppDispatch';
-import { fetchCategories } from '../store/store';
-import { ErrorMessage } from '../components';
 import { Category } from '../types/Category';
-import {
-  filterProductByCategory,
-  updateFilters,
-} from '../store/reducers/productsSlice';
 
 const carouselSettings = {
   responsive: {
