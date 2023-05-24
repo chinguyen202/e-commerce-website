@@ -9,8 +9,8 @@ export interface Product {
   images: string[];
 }
 export interface FilterOptions {
-  minPrice: number | null;
-  maxPrice: number | null;
+  minPrice: number;
+  maxPrice: number;
   category: Category | null;
 }
 export interface ProductsState {
