@@ -1,10 +1,15 @@
-import { UserForm } from '../components';
+import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
+import { SideImage } from '../components';
+import LoginForm from '../components/LoginForm';
 
 const Login = () => {
   return (
-    <>
-      <UserForm />
-    </>
+    <Grid container component="main" sx={{ height: '100vh' }}>
+      <CssBaseline />
+      <SideImage />
+      <LoginForm />
+    </Grid>
   );
 };
 

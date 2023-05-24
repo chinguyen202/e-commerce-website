@@ -6,6 +6,7 @@ import Login from './Login';
 import Products from './Products';
 import SingleProduct from './SingleProduct';
 import Register from './Register';
+import Dashboard from './Dashboard';
 
 export {
   Checkout,
@@ -16,4 +17,5 @@ export {
   Home,
   Cart,
   Register,
+  Dashboard,
 };

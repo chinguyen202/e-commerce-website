@@ -10,6 +10,7 @@ import {
   SingleProduct,
   Error,
   Register,
+  Dashboard,
 } from './pages';
 import { Navbar, Footer } from './components';
 import useAppSelector from './hooks/useAppSelector';
@@ -62,12 +63,13 @@ const App = () => {
         <Navbar mode={mode} setMode={setMode} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<SingleProduct />} />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="products" element={<Products />} />
+          <Route path="products/:id" element={<SingleProduct />} />
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer />
