@@ -1,6 +1,5 @@
-import * as React from 'react';
 import { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -17,6 +16,7 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { links } from '../utils/constants';
+import useAppSelector from '../hooks/useAppSelector';
 
 type NavBarProps = {
   mode: 'light' | 'dark';
@@ -25,6 +25,7 @@ type NavBarProps = {
 
 const NavBar = ({ mode, setMode }: NavBarProps) => {
   const theme = useTheme();
+  const amount = useAppSelector((state) => state.cart.amount);
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -153,9 +154,25 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
           <Box sx={{ flexGrow: 0 }}>
             <Link to="/cart">
               <Tooltip title="Cart">
-                <IconButton sx={{ p: 0, marginRight: '1rem' }}>
+                <IconButton
+                  sx={{ p: 0, marginRight: '1rem', position: 'relative' }}
+                >
                   <ShoppingCartIcon sx={{ fontSize: 40 }} color="secondary" />
-                  <span className="cart-value">12</span>{' '}
+                  <span
+                    className="cart-value"
+                    style={{
+                      position: 'absolute',
+                      top: '-10px',
+                      right: '-10px',
+                      background: 'red',
+                      color: '#fff',
+                      borderRadius: '50%',
+                      padding: '4px 8px',
+                      fontSize: '12px',
+                    }}
+                  >
+                    {amount}
+                  </span>
                 </IconButton>
               </Tooltip>
             </Link>

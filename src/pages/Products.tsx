@@ -20,26 +20,18 @@ const Products = () => {
     filterProducts,
     filterOptions,
   } = useAppSelector((state) => state.products);
-  // const allProducts = useAppSelector((state) => state.products.products);
-  // const gridView = useAppSelector((state) => state.products.gridView);
-  // const isSort = useAppSelector((state) => state.products.isSort);
-  // const sortProducts = useAppSelector((state) => state.products.sortedProducts);
-  // const isFilter = useAppSelector((state) => state.products.isFilter);
-  // const filterProducts = useAppSelector(
-  //   (state) => state.products.filterProducts
-  // );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [
     dispatch,
-    products,
-    isSort,
-    sortedProducts,
-    isFilter,
-    filterProducts,
-    filterOptions,
+    // products,
+    // isSort,
+    // sortedProducts,
+    // isFilter,
+    // filterProducts,
+    // filterOptions,
   ]);
   return (
     <>
