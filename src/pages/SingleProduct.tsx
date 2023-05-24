@@ -29,9 +29,6 @@ const SingleProduct = () => {
     return <Loading />;
   }
 
-  if (productState.isError) {
-    return <ErrorMessage error={productState.error} />;
-  }
   return (
     <>
       <CurrentLocation

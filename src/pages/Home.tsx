@@ -26,9 +26,9 @@ const Home = () => {
     return <Loading />;
   }
 
-  if (isError) {
-    return <ErrorMessage error={error} />;
-  }
+  // if (isError) {
+  //   return <ErrorMessage error={error} />;
+  // }
   return (
     <>
       <Hero />

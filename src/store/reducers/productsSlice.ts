@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ProductsState, SortPayload, FilterOptions } from '../../types/Product';
 import { fetchCategories, fetchProducts, fetchSingleProduct } from '../store';
-import { Product } from '../../types/Product';
 import { Category } from '../../types/Category';
 
 const initialState: ProductsState = {
