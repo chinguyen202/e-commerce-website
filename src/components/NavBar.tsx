@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -70,21 +70,19 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
               }}
             >
               {links.map((link) => (
-                <Link
+                <MenuItem
+                  component={Link}
                   to={link.url}
-                  style={{
-                    textDecoration: 'none',
-                    color: theme.palette.secondary.main,
-                  }}
+                  key={link.id}
+                  onClick={handleCloseNavMenu}
                 >
-                  <MenuItem key={link.id} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{link.text}</Typography>
-                  </MenuItem>
-                </Link>
+                  <Typography key={link.id} textAlign="center">
+                    {link.text}
+                  </Typography>
+                </MenuItem>
               ))}
             </Menu>
           </Box>
-
           <Link
             to="/"
             style={{
@@ -106,7 +104,6 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
               <Typography
                 variant="h6"
                 noWrap
-                component="a"
                 className="link-item"
                 sx={{
                   mr: 2,
@@ -129,6 +126,7 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
           >
             {links.map((page) => (
               <Link
+                key={page.id}
                 to={page.url}
                 style={{
                   textDecoration: 'none',
