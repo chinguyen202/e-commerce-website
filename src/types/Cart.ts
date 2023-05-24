@@ -1,8 +1,11 @@
 import { Product } from './Product';
 
-export interface Cart {
-  cartItem: Product[];
+export interface CartItemI extends Product {
   amount: number;
-  totalPrice: number;
+}
+export interface Cart {
+  cartItems: CartItemI[];
+  totalAmount: number;
+  total: number;
   isLoading: boolean;
 }

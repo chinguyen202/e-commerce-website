@@ -25,7 +25,7 @@ type NavBarProps = {
 
 const NavBar = ({ mode, setMode }: NavBarProps) => {
   const theme = useTheme();
-  const amount = useAppSelector((state) => state.cart.amount);
+  const amount = useAppSelector((state) => state.cart.totalAmount);
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);

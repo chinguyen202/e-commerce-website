@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import {
   AddToCart,
@@ -12,6 +12,7 @@ import {
 import useAppSelector from '../hooks/useAppSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { fetchSingleProduct } from '../store/store';
+import { CartItemI } from '../types/Cart';
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -57,7 +58,7 @@ const SingleProduct = () => {
               description={product.description}
               categoryName={product.category.name}
             />
-            <AddToCart product={product} />
+            {/* <AddToCart cartItem={cartItem} /> */}
           </Box>
         </Container>
       )}

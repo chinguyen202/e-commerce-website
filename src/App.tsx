@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
 import {
@@ -12,9 +12,17 @@ import {
   Register,
 } from './pages';
 import { Navbar, Footer } from './components';
+import useAppSelector from './hooks/useAppSelector';
+import { useAppDispatch } from './hooks/useAppDispatch';
+import { calculateTotal } from './store/reducers/cartSlice';
 
 const App = () => {
+  const dispatch = useAppDispatch();
   const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const { cartItems } = useAppSelector((state) => state.cart);
+  useEffect(() => {
+    dispatch(calculateTotal());
+  }, [cartItems]);
 
   const dynamicTheme = createTheme({
     palette:

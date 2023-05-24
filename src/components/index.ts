@@ -18,6 +18,7 @@ import Loading from './Loading';
 import Sort from './Sort';
 import ProductsListView from './ProductsListView';
 import ProductsGridView from './ProductsGridView';
+import CartItem from './CartItem';
 
 export {
   Footer,
@@ -40,4 +41,5 @@ export {
   Sort,
   ProductsListView,
   ProductsGridView,
+  CartItem,
 };

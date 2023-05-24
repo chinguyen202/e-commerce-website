@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Container,
   Divider,
   Typography,
   useTheme,
@@ -9,30 +7,45 @@ import {
   Button,
   Box,
 } from '@mui/material';
-import { Product } from '../types/Product';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { CartItemI } from '../types/Cart';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import {
+  decreaseAmount,
+  increaseAmount,
+  removeItem,
+} from '../store/reducers/cartSlice';
+import useAppSelector from '../hooks/useAppSelector';
 
 type Props = {
-  product: Product;
+  cartItem: CartItemI;
 };
 
-const AddToCart = ({ product }: Props) => {
+const AddToCart = ({ cartItem }: Props) => {
   const theme = useTheme();
-  const [amount, setAmount] = useState(1);
+  const dispatch = useAppDispatch();
+  const amount = useAppSelector((state) => {
+    const cartItemTemp = state.cart.cartItems.find(
+      (item) => item.id === cartItem.id
+    ) as CartItemI;
+    return cartItemTemp ? cartItemTemp.amount : 0;
+  });
 
   const increase = () => {
-    setAmount(amount + 1);
+    dispatch(increaseAmount(cartItem));
   };
 
   const decrease = () => {
-    if (amount > 1) {
-      setAmount(amount - 1);
+    if (amount === 1) {
+      dispatch(removeItem(cartItem));
+      return;
     }
+    dispatch(decreaseAmount(cartItem));
   };
 
   return (
-    <Container
+    <Box
       sx={{
         padding: '2rem',
         color: theme.palette.secondary.main,
@@ -62,10 +75,10 @@ const AddToCart = ({ product }: Props) => {
       </Box>
       <Link to="/cart">
         <Button variant="contained" color="secondary" onClick={() => {}}>
-          Go to Cart
+          Add to Cart
         </Button>
       </Link>
-    </Container>
+    </Box>
   );
 };
 
