@@ -14,6 +14,10 @@ import {
   Error,
   Register,
   Dashboard,
+  Stats,
+  Profile,
+  AddCategory,
+  AddProduct,
 } from './pages';
 import { Navbar, Footer } from './components';
 import useAppSelector from './hooks/useAppSelector';
@@ -26,7 +30,7 @@ const App = () => {
   const { cartItems } = useAppSelector((state) => state.cart);
   useEffect(() => {
     dispatch(calculateTotal());
-  }, [cartItems]);
+  }, [cartItems, dispatch]);
 
   const dynamicTheme = createTheme({
     palette:
@@ -63,7 +67,6 @@ const App = () => {
   return (
     <ThemeProvider theme={dynamicTheme}>
       <Router>
-        <ToastContainer position="top-center" />
         <Navbar mode={mode} setMode={setMode} />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -73,10 +76,16 @@ const App = () => {
           <Route path="products" element={<Products />} />
           <Route path="products/:id" element={<SingleProduct />} />
           <Route path="checkout" element={<Checkout />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />}>
+            <Route index element={<Profile />} />
+            <Route path="add-categories" element={<AddCategory />} />
+            <Route path="add-product" element={<AddProduct />} />
+            <Route path="stats" element={<Stats />} />
+          </Route>
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer />
+        <ToastContainer position="top-center" />
       </Router>
     </ThemeProvider>
   );

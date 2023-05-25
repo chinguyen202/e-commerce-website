@@ -17,6 +17,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { links } from '../utils/constants';
 import useAppSelector from '../hooks/useAppSelector';
+import LoginButton from './LoginButton';
 
 type NavBarProps = {
   mode: 'light' | 'dark';
@@ -26,6 +27,7 @@ type NavBarProps = {
 const NavBar = ({ mode, setMode }: NavBarProps) => {
   const theme = useTheme();
   const amount = useAppSelector((state) => state.cart.totalAmount);
+  const { currentUser, token } = useAppSelector((state) => state.user);
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -37,6 +39,11 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
   const handleModeChange = () => {
     setMode(mode === 'light' ? 'dark' : 'light');
   };
+
+  const handleLogin = () => {};
+
+  const handleLogout = () => {};
+
   return (
     <AppBar position="static">
       <Container maxWidth={false}>
@@ -150,6 +157,29 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
                 </Typography>
               </Link>
             ))}
+            {token && (
+              <Link
+                to="/checkout"
+                style={{
+                  textDecoration: 'none',
+                  color: theme.palette.secondary.main,
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  noWrap
+                  sx={{
+                    mr: 3,
+                    display: { xs: 'none', md: 'flex' },
+                    fontWeight: 700,
+                    letterSpacing: '.3rem',
+                    textDecoration: 'none',
+                  }}
+                >
+                  Checkout
+                </Typography>
+              </Link>
+            )}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Link to="/cart">
@@ -157,6 +187,7 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
                 <IconButton
                   sx={{ p: 0, marginRight: '1rem', position: 'relative' }}
                 >
+                  <Typography>Cart</Typography>
                   <ShoppingCartIcon sx={{ fontSize: 40 }} color="secondary" />
                   <span
                     className="cart-value"
@@ -176,13 +207,12 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
                 </IconButton>
               </Tooltip>
             </Link>
-            <Link to="/login">
-              <Tooltip title="Login">
-                <IconButton sx={{ p: 0, marginRight: '1rem' }}>
-                  <AccountCircleIcon sx={{ fontSize: 40 }} color="secondary" />
-                </IconButton>
-              </Tooltip>
-            </Link>
+
+            {token ? (
+              <LoginButton name="Logout" handleClick={handleLogout} />
+            ) : (
+              <LoginButton name="Login" handleClick={handleLogin} />
+            )}
             <Tooltip title="Change Mode">
               <IconButton sx={{ p: 0 }} onClick={handleModeChange}>
                 {mode === 'light' ? (

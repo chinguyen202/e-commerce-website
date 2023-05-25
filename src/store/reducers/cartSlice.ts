@@ -25,7 +25,6 @@ const cartSlice = createSlice({
         // If the product is already in the cart, increase the amount
         existingItem.amount += 1;
       } else {
-        // const { title, price, description, category, images } = product;
         const cartItem: CartItemI = {
           ...product,
           amount: amount,

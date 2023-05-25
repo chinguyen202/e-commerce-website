@@ -5,6 +5,7 @@ import {
   getUserProfile,
   loginUser,
   registerUser,
+  updateUser,
 } from '../store';
 import { UserState } from '../../types/User';
 import {
@@ -24,7 +25,9 @@ const initialState: UserState = {
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state, action) => {},
+  },
   extraReducers(builder) {
     builder
       .addCase(loginUser.pending, (state) => {
@@ -38,7 +41,7 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
-        toast.error(action.error.message);
+        toast.error(action.payload as string);
       })
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
@@ -64,7 +67,7 @@ const userSlice = createSlice({
       })
       .addCase(fetchAllUsers.rejected, (state, action) => {
         state.isLoading = false;
-        toast.error(action.error.message);
+        toast.error(action.error as string);
       })
       .addCase(getUserProfile.pending, (state) => {
         state.isLoading = false;
@@ -78,6 +81,18 @@ const userSlice = createSlice({
         state.isLoading = false;
         const errorMessage = action.payload as string;
         toast.error(errorMessage);
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.currentUser = action.payload;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.isLoading = false;
+        const error = action.payload as string;
+        toast.error(error);
       });
   },
 });

@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import {
   AddToCart,
   CurrentLocation,
-  ErrorMessage,
   Loading,
   ProductDetail,
   ProductImages,
@@ -12,11 +11,13 @@ import {
 import useAppSelector from '../hooks/useAppSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { fetchSingleProduct } from '../store/store';
+import { toast } from 'react-toastify';
 
 const SingleProduct = () => {
   const { id } = useParams();
-  const productState = useAppSelector((state) => state.products);
-  const product = productState.product;
+  const { product, isLoading, isError, error } = useAppSelector(
+    (state) => state.products
+  );
 
   const dispatch = useAppDispatch();
 
@@ -24,10 +25,13 @@ const SingleProduct = () => {
     if (id) dispatch(fetchSingleProduct(id));
   }, [id, dispatch]);
 
-  if (productState.isLoading) {
+  if (isLoading) {
     return <Loading />;
   }
 
+  if (isError) {
+    toast.error(error);
+  }
   return (
     <>
       <CurrentLocation

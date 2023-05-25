@@ -12,6 +12,10 @@ export interface LoginData {
   password: string;
 }
 
+export interface UpdateUserData extends LoginData {
+  id: number;
+}
+
 export interface RegisterData extends LoginData {
   name: string;
   avatar: string;

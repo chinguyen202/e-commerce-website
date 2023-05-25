@@ -1,4 +1,5 @@
 import { useTheme } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button, Container, Divider, Typography } from '@mui/material';
 import { CartItem, CurrentLocation } from '../components';
 import useAppSelector from '../hooks/useAppSelector';
@@ -9,12 +10,22 @@ import { useAppDispatch } from '../hooks/useAppDispatch';
 const Cart = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  const { cartItems, total, totalAmount, isLoading } = useAppSelector(
+  const navigate = useNavigate();
+  const { token } = useAppSelector((state) => state.user);
+  const { totalAmount, cartItems, total } = useAppSelector(
     (state) => state.cart
   );
   const handleClearCart = () => {
     dispatch(clearCart());
     console.log(cartItems);
+  };
+
+  const handleCheckout = () => {
+    if (token) {
+      navigate('/checkout');
+    } else {
+      navigate('/login');
+    }
   };
 
   if (totalAmount < 1) {
@@ -60,8 +71,9 @@ const Cart = () => {
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            m: '5rem',
           }}
         >
           <Button
@@ -71,6 +83,23 @@ const Cart = () => {
             onClick={handleClearCart}
           >
             Clear cart
+          </Button>
+          <Link to="/products">
+            <Button
+              size="medium"
+              color="primary"
+              sx={{ bgcolor: theme.palette.secondary.main }}
+            >
+              Continue to shopping
+            </Button>
+          </Link>
+          <Button
+            size="medium"
+            color="primary"
+            sx={{ bgcolor: theme.palette.secondary.main }}
+            onClick={handleCheckout}
+          >
+            Process to checkout
           </Button>
         </Box>
       </Container>

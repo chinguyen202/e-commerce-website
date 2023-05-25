@@ -26,7 +26,6 @@ import { Category } from '../types/Category';
 const FilterProductsSideBar = ({ products }: ProductsProps) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  // const maxPrice = Math.max(...products.map((p) => p.price));
   const categories = useAppSelector((state) => state.products.categories);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(

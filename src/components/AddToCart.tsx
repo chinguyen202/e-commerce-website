@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import {
   Divider,
   Typography,
@@ -84,17 +83,15 @@ const AddToCart = ({ item }: Props) => {
           <AddIcon />
         </IconButton>
       </Box>
-      <Link to="/cart">
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => {
-            dispatch(addItem({ product: item, amount: number }));
-          }}
-        >
-          Add to Cart
-        </Button>
-      </Link>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => {
+          dispatch(addItem({ product: item, amount: number }));
+        }}
+      >
+        Add to Cart
+      </Button>
     </Box>
   );
 };

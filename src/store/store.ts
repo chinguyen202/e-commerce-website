@@ -15,9 +15,7 @@ const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
-export * from './thunks/fetchCategories';
-export * from './thunks/fetchProducts';
-export * from './thunks/fetchSingleProduct';
-export * from './thunks/loginUser';
-export * from './thunks/fetchUser';
+export * from './thunks/categoryThunks';
+export * from './thunks/userThunks';
+export * from './thunks/productThunks';
 export default store;

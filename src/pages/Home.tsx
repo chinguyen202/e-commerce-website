@@ -1,14 +1,9 @@
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 import useAppSelector from '../hooks/useAppSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { fetchCategories } from '../store/store';
-import {
-  CategoryList,
-  ErrorMessage,
-  Hero,
-  Loading,
-  SignupPromotion,
-} from '../components';
+import { CategoryList, Hero, Loading, SignupPromotion } from '../components';
 import Services from '../components/Services';
 
 const Home = () => {
@@ -26,9 +21,9 @@ const Home = () => {
     return <Loading />;
   }
 
-  // if (isError) {
-  //   return <ErrorMessage error={error} />;
-  // }
+  if (isError) {
+    toast.error(error);
+  }
   return (
     <>
       <Hero />

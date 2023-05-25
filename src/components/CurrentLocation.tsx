@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Container, Box, Typography, useTheme } from '@mui/material';
+import { Container, Typography, useTheme } from '@mui/material';
 
 type CurrentLocationProps = {
   name: string;

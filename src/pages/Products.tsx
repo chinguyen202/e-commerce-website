@@ -18,21 +18,12 @@ const Products = () => {
     sortedProducts,
     isFilter,
     filterProducts,
-    filterOptions,
   } = useAppSelector((state) => state.products);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchProducts());
-  }, [
-    dispatch,
-    // products,
-    // isSort,
-    // sortedProducts,
-    // isFilter,
-    // filterProducts,
-    // filterOptions,
-  ]);
+  }, [dispatch]);
   return (
     <>
       <CurrentLocation name="Products" singleProduct={false} />

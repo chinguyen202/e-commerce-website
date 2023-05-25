@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { Container, Box } from '@mui/material';
+import { useState } from 'react';
+import { Box } from '@mui/material';
 
 type Props = {
   images: string[];
 };
 
 const ProductImages = ({ images }: Props) => {
-  console.log(images);
   const [main, setMain] = useState<string>(images[0]);
   return (
     <Box>

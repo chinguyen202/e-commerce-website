@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { FormRow, UploadFileFormRow } from '../components';
-import { registerUser } from '../store/thunks/loginUser';
+import { registerUser } from '../store/thunks/userThunks';
 import { uploadFile } from '../utils/helpers';
 import useAppSelector from '../hooks/useAppSelector';
 import { fetchAllUsers } from '../store/store';
