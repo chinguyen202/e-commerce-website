@@ -155,27 +155,50 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
               </Link>
             ))}
             {isAuth ? (
-              <Link
-                to="/checkout"
-                style={{
-                  textDecoration: 'none',
-                  color: theme.palette.secondary.main,
-                }}
-              >
-                <Typography
-                  variant="h6"
-                  noWrap
-                  sx={{
-                    mr: 3,
-                    display: { xs: 'none', md: 'flex' },
-                    fontWeight: 700,
-                    letterSpacing: '.3rem',
+              <>
+                <Link
+                  to="/checkout"
+                  style={{
                     textDecoration: 'none',
+                    color: theme.palette.secondary.main,
                   }}
                 >
-                  Checkout
-                </Typography>
-              </Link>
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    sx={{
+                      mr: 3,
+                      display: { xs: 'none', md: 'flex' },
+                      fontWeight: 700,
+                      letterSpacing: '.3rem',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    Checkout
+                  </Typography>
+                </Link>
+                <Link
+                  to="/user"
+                  style={{
+                    textDecoration: 'none',
+                    color: theme.palette.secondary.main,
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    sx={{
+                      mr: 3,
+                      display: { xs: 'none', md: 'flex' },
+                      fontWeight: 700,
+                      letterSpacing: '.3rem',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    Profile
+                  </Typography>
+                </Link>
+              </>
             ) : (
               <></>
             )}

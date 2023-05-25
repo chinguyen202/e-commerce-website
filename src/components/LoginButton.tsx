@@ -1,6 +1,5 @@
 import { Tooltip, IconButton, Typography } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { ChangeEvent, MouseEventHandler } from 'react';
 
 type Props = {
   name: string;

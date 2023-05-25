@@ -13,10 +13,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { toast } from 'react-toastify';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { FormRow } from '../components';
-import { getUserProfile, loginUser } from '../store/store';
+import { loginUser } from '../store/store';
 import useAppSelector from '../hooks/useAppSelector';
 import { LoginData } from '../types/User';
-import { getTokenFromStorage } from '../utils/localStorage';
 
 const initialValues: LoginData = {
   email: '',
@@ -35,7 +34,7 @@ const LoginForm = () => {
     if (currentUser) {
       setTimeout(() => {
         if (currentUser?.role === 'admin') {
-          navigate('/dashboard');
+          navigate('/user');
         } else {
           navigate('/');
         }
