@@ -21,6 +21,8 @@ import SideImage from './SideImage';
 import FormRow from './FormRow';
 import UploadFileFormRow from './UploadFileForm';
 import DashboardSidebar from './DashboardSidebar';
+import SidebarItem from './SidebarItem';
+import CustomerList from './CustomerList';
 
 export {
   Footer,
@@ -46,4 +48,6 @@ export {
   FormRow,
   UploadFileFormRow,
   DashboardSidebar,
+  SidebarItem,
+  CustomerList,
 };

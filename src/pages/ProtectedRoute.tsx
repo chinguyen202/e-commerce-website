@@ -3,10 +3,10 @@ import useAppSelector from '../hooks/useAppSelector';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
+  isAuth: boolean;
 }
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const isAuth = useAppSelector((store) => store.user);
+const ProtectedRoute = ({ isAuth, children }: ProtectedRouteProps) => {
   if (!isAuth) {
     return <Navigate to="/" />;
   }

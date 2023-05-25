@@ -19,7 +19,7 @@ import {
   AddProduct,
   ProtectedRoute,
 } from './pages';
-import { Navbar, Footer } from './components';
+import { Navbar, Footer, CustomerList } from './components';
 import useAppSelector from './hooks/useAppSelector';
 import { useAppDispatch } from './hooks/useAppDispatch';
 import { calculateTotal } from './store/reducers/cartSlice';
@@ -78,7 +78,6 @@ const App = () => {
     <ThemeProvider theme={dynamicTheme}>
       <Router>
         <Navbar mode={mode} setMode={setMode} />
-        {/* <Navbar /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="login" element={<Login />} />
@@ -89,23 +88,24 @@ const App = () => {
           <Route
             path="checkout"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute isAuth={isAuth}>
                 <Checkout />
               </ProtectedRoute>
             }
           />
           <Route
-            path="dashboard"
+            path="user"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute isAuth={isAuth}>
                 <Dashboard />
               </ProtectedRoute>
             }
           >
             <Route index element={<Profile />} />
-            <Route path="add-categories" element={<AddCategory />} />
+            <Route path="add-category" element={<AddCategory />} />
             <Route path="add-product" element={<AddProduct />} />
             <Route path="stats" element={<Stats />} />
+            <Route path="customers" element={<CustomerList />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
