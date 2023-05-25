@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { Cart, CartItemI, CartAction } from '../../types/Cart';
 import { Product } from '../../types/Product';
+import { addCartToLocalStorage } from '../../utils/localStorage';
 
 const initialState: Cart = {
   cartItems: [],
@@ -57,6 +58,7 @@ const cartSlice = createSlice({
       });
       state.totalAmount = amount;
       state.total = totalPrice;
+      addCartToLocalStorage(state.cartItems);
     },
   },
 });

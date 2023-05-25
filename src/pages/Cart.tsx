@@ -11,7 +11,7 @@ const Cart = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { token } = useAppSelector((state) => state.user);
+  const { isAuth } = useAppSelector((state) => state.user);
   const { totalAmount, cartItems, total } = useAppSelector(
     (state) => state.cart
   );
@@ -21,7 +21,7 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
-    if (token) {
+    if (isAuth) {
       navigate('/checkout');
     } else {
       navigate('/login');

@@ -27,7 +27,7 @@ type NavBarProps = {
 const NavBar = ({ mode, setMode }: NavBarProps) => {
   const theme = useTheme();
   const amount = useAppSelector((state) => state.cart.totalAmount);
-  const { currentUser, token } = useAppSelector((state) => state.user);
+  const { currentUser, isAuth } = useAppSelector((state) => state.user);
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -157,7 +157,7 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
                 </Typography>
               </Link>
             ))}
-            {token && (
+            {isAuth && (
               <Link
                 to="/checkout"
                 style={{
@@ -208,7 +208,7 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
               </Tooltip>
             </Link>
 
-            {token ? (
+            {isAuth ? (
               <LoginButton name="Logout" handleClick={handleLogout} />
             ) : (
               <LoginButton name="Login" handleClick={handleLogin} />

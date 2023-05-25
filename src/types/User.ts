@@ -22,7 +22,7 @@ export interface RegisterData extends LoginData {
 }
 
 export interface UserState {
-  token: string | null;
+  isAuth: boolean;
   users: User[];
   currentUser: User | null;
   isLoading: boolean;

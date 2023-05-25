@@ -11,6 +11,7 @@ import AddCategory from './Dashboard/AddCategory';
 import AddProduct from './Dashboard/AddProduct';
 import Profile from './Dashboard/Profile';
 import Stats from './Dashboard/Stats';
+import ProtectedRoute from './ProtectedRoute';
 
 export {
   Checkout,
@@ -26,4 +27,5 @@ export {
   AddProduct,
   Profile,
   Stats,
+  ProtectedRoute,
 };

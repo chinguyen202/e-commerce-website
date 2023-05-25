@@ -16,6 +16,7 @@ import { getUserProfile, loginUser } from '../store/store';
 import useAppSelector from '../hooks/useAppSelector';
 import { LoginData } from '../types/User';
 import { useNavigate } from 'react-router-dom';
+import { getTokenFromStorage } from '../utils/localStorage';
 
 const initialValues: LoginData = {
   email: '',
@@ -24,24 +25,24 @@ const initialValues: LoginData = {
 
 const LoginForm = () => {
   const [values, setValues] = useState(initialValues);
-  const { token, currentUser, isLoading } = useAppSelector(
+  const { isAuth, currentUser, isLoading } = useAppSelector(
     (state) => state.user
   );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (token) {
-      dispatch(getUserProfile(token));
-      setTimeout(() => {
-        if (currentUser?.role === 'admin') {
-          navigate('/dashboard');
-        } else {
-          navigate('/');
-        }
-      }, 3000);
-    }
-  }, [token, currentUser, dispatch, navigate]);
+  // useEffect(() => {
+  //   if (isAuth) {
+  //     dispatch(getUserProfile(token));
+  //     setTimeout(() => {
+  //       if (currentUser?.role === 'admin') {
+  //         navigate('/dashboard');
+  //       } else {
+  //         navigate('/');
+  //       }
+  //     }, 3000);
+  //   }
+  // }, [token, currentUser, dispatch, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

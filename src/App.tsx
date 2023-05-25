@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/ReactToastify.min.css';
-
 import {
   Home,
   Cart,
@@ -18,6 +17,7 @@ import {
   Profile,
   AddCategory,
   AddProduct,
+  ProtectedRoute,
 } from './pages';
 import { Navbar, Footer } from './components';
 import useAppSelector from './hooks/useAppSelector';
@@ -75,8 +75,22 @@ const App = () => {
           <Route path="cart" element={<Cart />} />
           <Route path="products" element={<Products />} />
           <Route path="products/:id" element={<SingleProduct />} />
-          <Route path="checkout" element={<Checkout />} />
-          <Route path="dashboard" element={<Dashboard />}>
+          <Route
+            path="checkout"
+            element={
+              <ProtectedRoute>
+                <Checkout />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Profile />} />
             <Route path="add-categories" element={<AddCategory />} />
             <Route path="add-product" element={<AddProduct />} />

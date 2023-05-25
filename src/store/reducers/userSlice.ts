@@ -10,23 +10,29 @@ import {
 import { UserState } from '../../types/User';
 import {
   addTokenToLocalStorage,
-  addUserToLocalStorage,
   getTokenFromStorage,
-  getUserFromStorage,
+  removeTokenFromLocalStorage,
 } from '../../utils/localStorage';
 
 const initialState: UserState = {
-  token: getTokenFromStorage(),
+  isAuth: false,
   users: [],
   isLoading: false,
-  currentUser: getUserFromStorage(),
+  currentUser: null,
 };
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    logout: (state, action) => {},
+    updateIsAuth: (state) => {
+      state.isAuth = true;
+    },
+    logoutUser: (state) => {
+      state.isAuth = false;
+      state.currentUser = null;
+      removeTokenFromLocalStorage();
+    },
   },
   extraReducers(builder) {
     builder
@@ -47,10 +53,9 @@ const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        const { user } = action.payload;
         state.isLoading = false;
-        state.currentUser = user;
-        addUserToLocalStorage(action.payload);
+        state.isAuth = true;
+        state.currentUser = action.payload;
         toast.success(`Welcome to join us!`);
       })
       .addCase(registerUser.rejected, (state, action) => {
@@ -75,7 +80,6 @@ const userSlice = createSlice({
       .addCase(getUserProfile.fulfilled, (state, action) => {
         state.isLoading = false;
         state.currentUser = action.payload;
-        addUserToLocalStorage(action.payload);
       })
       .addCase(getUserProfile.rejected, (state, action) => {
         state.isLoading = false;
@@ -97,4 +101,6 @@ const userSlice = createSlice({
   },
 });
 
+export const { logoutUser } = userSlice.actions;
+export const { updateIsAuth } = userSlice.actions;
 export default userSlice.reducer;

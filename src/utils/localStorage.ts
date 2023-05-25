@@ -1,25 +1,25 @@
-import { User } from '../types/User';
+import { CartItemI } from '../types/Cart';
 
-export const addUserToLocalStorage = (user: User) => {
-  localStorage.setItem('user', JSON.stringify(user));
+export const addCartToLocalStorage = (cart: CartItemI[]) => {
+  localStorage.setItem('cart', JSON.stringify(cart));
 };
 
-export const removeUserFromStorage = (user: User) => {
-  localStorage.removeItem(JSON.stringify(user));
+export const removeCartFromStorage = () => {
+  localStorage.removeItem('cart');
 };
 
-export const getUserFromStorage = () => {
-  const result = localStorage.getItem('user');
-  const user = result ? JSON.parse(result) : null;
-  return user;
+export const getCartFromStorage = () => {
+  const result = localStorage.getItem('cart');
+  const cart = result ? JSON.parse(result) : null;
+  return cart;
 };
 
 export const addTokenToLocalStorage = (token: string) => {
   localStorage.setItem('access_token', token);
 };
 
-export const removeTokenFromLocalStorage = (token: string) => {
-  localStorage.removeItem(token);
+export const removeTokenFromLocalStorage = () => {
+  localStorage.removeItem('access_token');
 };
 
 export const getTokenFromStorage = () => {
