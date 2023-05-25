@@ -8,7 +8,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -21,17 +20,16 @@ import LoginButton from './LoginButton';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { logoutUser } from '../store/reducers/userSlice';
 
-type NavBarProps = {
+interface NavBarProps {
   mode: 'light' | 'dark';
   setMode: (mode: 'light' | 'dark') => void;
-};
+}
 
 const NavBar = ({ mode, setMode }: NavBarProps) => {
   const theme = useTheme();
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const amount = useAppSelector((state) => state.cart.totalAmount);
-  const { currentUser, isAuth } = useAppSelector((state) => state.user);
+  const isAuth = useAppSelector((state) => state.user.isAuth);
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -43,20 +41,6 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
   const handleModeChange = () => {
     setMode(mode === 'light' ? 'dark' : 'light');
   };
-
-  const handleLogin = () => {
-    setTimeout(() => {
-      navigate('/login');
-    }, 1000);
-  };
-
-  const handleLogout = () => {
-    dispatch(logoutUser());
-    setTimeout(() => {
-      navigate('/');
-    }, 1000);
-  };
-
   return (
     <AppBar position="static">
       <Container maxWidth={false}>
@@ -170,7 +154,7 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
                 </Typography>
               </Link>
             ))}
-            {isAuth && (
+            {isAuth ? (
               <Link
                 to="/checkout"
                 style={{
@@ -192,6 +176,8 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
                   Checkout
                 </Typography>
               </Link>
+            ) : (
+              <></>
             )}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
@@ -220,11 +206,13 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
                 </IconButton>
               </Tooltip>
             </Link>
-
-            {isAuth ? (
-              <LoginButton name="Logout" handleClick={handleLogout} />
-            ) : (
-              <LoginButton name="Login" handleClick={handleLogin} />
+            {!isAuth && (
+              <LoginButton
+                name="Login"
+                handleClick={() => {
+                  navigate('/login');
+                }}
+              />
             )}
             <Tooltip title="Change Mode">
               <IconButton sx={{ p: 0 }} onClick={handleModeChange}>
@@ -241,4 +229,5 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
     </AppBar>
   );
 };
+
 export default NavBar;

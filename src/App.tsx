@@ -78,6 +78,7 @@ const App = () => {
     <ThemeProvider theme={dynamicTheme}>
       <Router>
         <Navbar mode={mode} setMode={setMode} />
+        {/* <Navbar /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="login" element={<Login />} />
