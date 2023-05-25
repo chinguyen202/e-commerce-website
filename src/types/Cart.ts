@@ -9,3 +9,8 @@ export interface Cart {
   total: number;
   isLoading: boolean;
 }
+
+export interface CartAction {
+  product: Product;
+  amount: number;
+}

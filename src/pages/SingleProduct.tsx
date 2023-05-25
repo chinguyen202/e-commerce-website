@@ -12,13 +12,12 @@ import {
 import useAppSelector from '../hooks/useAppSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { fetchSingleProduct } from '../store/store';
-import { CartItemI } from '../types/Cart';
 
 const SingleProduct = () => {
   const { id } = useParams();
-  console.log('Params - ', id);
   const productState = useAppSelector((state) => state.products);
   const product = productState.product;
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -55,7 +54,7 @@ const SingleProduct = () => {
               description={product.description}
               categoryName={product.category.name}
             />
-            {/* <AddToCart cartItem={cartItem} /> */}
+            <AddToCart item={product} />
           </Box>
         </Container>
       )}

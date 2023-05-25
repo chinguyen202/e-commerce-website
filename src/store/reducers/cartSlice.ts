@@ -1,26 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { Cart, CartItemI } from '../../types/Cart';
+import { Cart, CartItemI, CartAction } from '../../types/Cart';
+import { Product } from '../../types/Product';
 
 const initialState: Cart = {
-  cartItems: [
-    {
-      id: 4,
-      title: 'Handmade Fresh Table',
-      price: 687,
-      description: 'Andy shoes are designed to keeping in...',
-      category: {
-        id: 5,
-        name: 'Others',
-        image: 'https://placeimg.com/640/480/any?r=0.591926261873231',
-      },
-      images: [
-        'https://placeimg.com/640/480/any?r=0.9178516507833767',
-        'https://placeimg.com/640/480/any?r=0.9300320592588625',
-        'https://placeimg.com/640/480/any?r=0.8807778235430017',
-      ],
-      amount: 0,
-    },
-  ],
+  cartItems: [],
   total: 0,
   totalAmount: 2,
   isLoading: false,
@@ -33,19 +16,36 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.cartItems = [];
     },
+    addItem: (state, action: PayloadAction<CartAction>) => {
+      const { product, amount } = action.payload;
+      const existingItem = state.cartItems.find(
+        (item) => item.id === product.id
+      );
+      if (existingItem) {
+        // If the product is already in the cart, increase the amount
+        existingItem.amount += 1;
+      } else {
+        // const { title, price, description, category, images } = product;
+        const cartItem: CartItemI = {
+          ...product,
+          amount: amount,
+        };
+        state.cartItems.push(cartItem);
+      }
+    },
     removeItem: (state, action: PayloadAction<CartItemI>) => {
       const itemId = action.payload.id;
       state.cartItems = state.cartItems.filter((item) => item.id !== itemId);
     },
-    increaseAmount: (state, action: PayloadAction<CartItemI>) => {
+    increaseAmount: (state, action: PayloadAction<Product | CartItemI>) => {
       const cartItem = state.cartItems.find(
-        (item) => item.id == action.payload.id
+        (item) => item.id === action.payload.id
       );
       if (cartItem) cartItem.amount = cartItem?.amount + 1;
     },
-    decreaseAmount: (state, action: PayloadAction<CartItemI>) => {
+    decreaseAmount: (state, action: PayloadAction<Product | CartItemI>) => {
       const cartItem = state.cartItems.find(
-        (item) => item.id == action.payload.id
+        (item) => item.id === action.payload.id
       );
       if (cartItem) cartItem.amount = cartItem?.amount - 1;
     },
@@ -68,5 +68,6 @@ export const {
   increaseAmount,
   decreaseAmount,
   calculateTotal,
+  addItem,
 } = cartSlice.actions;
 export default cartSlice.reducer;

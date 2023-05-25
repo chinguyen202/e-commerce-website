@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Divider,
@@ -15,33 +16,43 @@ import {
   decreaseAmount,
   increaseAmount,
   removeItem,
+  addItem,
 } from '../store/reducers/cartSlice';
 import useAppSelector from '../hooks/useAppSelector';
+import { Product } from '../types/Product';
 
 type Props = {
-  cartItem: CartItemI;
+  item: CartItemI | Product;
 };
 
-const AddToCart = ({ cartItem }: Props) => {
+const AddToCart = ({ item }: Props) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
+  const [number, setNumber] = useState(0);
+  const cartItem = useAppSelector((state) =>
+    state.cart.cartItems.find((temp) => temp.id === item.id)
+  );
   const amount = useAppSelector((state) => {
-    const cartItemTemp = state.cart.cartItems.find(
-      (item) => item.id === cartItem.id
-    ) as CartItemI;
-    return cartItemTemp ? cartItemTemp.amount : 0;
+    if (cartItem) {
+      const cartItemTemp = state.cart.cartItems.find(
+        (item) => item.id === cartItem.id
+      ) as CartItemI;
+      return cartItemTemp ? cartItemTemp.amount : 0;
+    }
   });
 
   const increase = () => {
-    dispatch(increaseAmount(cartItem));
+    setNumber(number + 1);
+    if (cartItem) dispatch(increaseAmount(cartItem));
   };
 
   const decrease = () => {
-    if (amount === 1) {
+    setNumber(number - 1);
+    if (amount === 1 && cartItem) {
       dispatch(removeItem(cartItem));
       return;
     }
-    dispatch(decreaseAmount(cartItem));
+    if (cartItem) dispatch(decreaseAmount(cartItem));
   };
 
   return (
@@ -67,14 +78,20 @@ const AddToCart = ({ cartItem }: Props) => {
           <RemoveIcon />
         </IconButton>
         <Typography variant="h4" style={{ margin: '0 1rem' }}>
-          {amount}
+          {cartItem ? amount : number}
         </Typography>
         <IconButton onClick={increase} size="medium">
           <AddIcon />
         </IconButton>
       </Box>
       <Link to="/cart">
-        <Button variant="contained" color="secondary" onClick={() => {}}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            dispatch(addItem({ product: item, amount: number }));
+          }}
+        >
           Add to Cart
         </Button>
       </Link>

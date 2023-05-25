@@ -73,7 +73,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
           </Button>
         </CardContent>
       </Box>
-      <AddToCart cartItem={cartItem} />
+      <AddToCart item={cartItem} />
     </Card>
   );
 };
