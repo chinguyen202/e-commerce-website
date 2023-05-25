@@ -23,14 +23,24 @@ import { Navbar, Footer } from './components';
 import useAppSelector from './hooks/useAppSelector';
 import { useAppDispatch } from './hooks/useAppDispatch';
 import { calculateTotal } from './store/reducers/cartSlice';
+import { getTokenFromStorage } from './utils/localStorage';
+import { updateIsAuth } from './store/reducers/userSlice';
+import { getUserProfile } from './store/store';
 
 const App = () => {
   const dispatch = useAppDispatch();
   const [mode, setMode] = useState<'light' | 'dark'>('light');
   const { cartItems } = useAppSelector((state) => state.cart);
+  const { isAuth, currentUser } = useAppSelector((state) => state.user);
+
   useEffect(() => {
+    const token = getTokenFromStorage();
+    if (token) {
+      dispatch(updateIsAuth());
+      dispatch(getUserProfile(token));
+    }
     dispatch(calculateTotal());
-  }, [cartItems, dispatch]);
+  }, [cartItems, dispatch, currentUser, isAuth]);
 
   const dynamicTheme = createTheme({
     palette:

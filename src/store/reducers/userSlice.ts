@@ -42,6 +42,7 @@ const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         const { access_token } = action.payload;
         state.isLoading = false;
+        state.isAuth = true;
         addTokenToLocalStorage(access_token);
         toast.success(`Welcome back`);
       })

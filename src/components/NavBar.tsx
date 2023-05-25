@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -18,6 +18,8 @@ import MenuItem from '@mui/material/MenuItem';
 import { links } from '../utils/constants';
 import useAppSelector from '../hooks/useAppSelector';
 import LoginButton from './LoginButton';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { logoutUser } from '../store/reducers/userSlice';
 
 type NavBarProps = {
   mode: 'light' | 'dark';
@@ -26,6 +28,8 @@ type NavBarProps = {
 
 const NavBar = ({ mode, setMode }: NavBarProps) => {
   const theme = useTheme();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const amount = useAppSelector((state) => state.cart.totalAmount);
   const { currentUser, isAuth } = useAppSelector((state) => state.user);
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -40,9 +44,18 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
     setMode(mode === 'light' ? 'dark' : 'light');
   };
 
-  const handleLogin = () => {};
+  const handleLogin = () => {
+    setTimeout(() => {
+      navigate('/login');
+    }, 1000);
+  };
 
-  const handleLogout = () => {};
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    setTimeout(() => {
+      navigate('/');
+    }, 1000);
+  };
 
   return (
     <AppBar position="static">

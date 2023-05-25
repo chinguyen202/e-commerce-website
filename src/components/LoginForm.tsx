@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Grid,
   Link,
@@ -15,7 +16,6 @@ import { FormRow } from '../components';
 import { getUserProfile, loginUser } from '../store/store';
 import useAppSelector from '../hooks/useAppSelector';
 import { LoginData } from '../types/User';
-import { useNavigate } from 'react-router-dom';
 import { getTokenFromStorage } from '../utils/localStorage';
 
 const initialValues: LoginData = {
@@ -24,25 +24,24 @@ const initialValues: LoginData = {
 };
 
 const LoginForm = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [values, setValues] = useState(initialValues);
   const { isAuth, currentUser, isLoading } = useAppSelector(
     (state) => state.user
   );
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (isAuth) {
-  //     dispatch(getUserProfile(token));
-  //     setTimeout(() => {
-  //       if (currentUser?.role === 'admin') {
-  //         navigate('/dashboard');
-  //       } else {
-  //         navigate('/');
-  //       }
-  //     }, 3000);
-  //   }
-  // }, [token, currentUser, dispatch, navigate]);
+  useEffect(() => {
+    if (currentUser) {
+      setTimeout(() => {
+        if (currentUser?.role === 'admin') {
+          navigate('/dashboard');
+        } else {
+          navigate('/');
+        }
+      }, 3000);
+    }
+  }, [currentUser, dispatch, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
