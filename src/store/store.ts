@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import productsReducer from './reducers/productsSlice';
 import cartReducer from './reducers/cartSlice';
+import userReducer from './reducers/userSlice';
 
 const store = configureStore({
   reducer: {
     cart: cartReducer,
     products: productsReducer,
+    user: userReducer,
   },
 });
 
@@ -16,4 +18,6 @@ export type AppDispatch = typeof store.dispatch;
 export * from './thunks/fetchCategories';
 export * from './thunks/fetchProducts';
 export * from './thunks/fetchSingleProduct';
+export * from './thunks/loginUser';
+export * from './thunks/fetchUser';
 export default store;

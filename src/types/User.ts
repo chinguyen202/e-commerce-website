@@ -7,15 +7,19 @@ export interface User {
   avatar: string;
 }
 
-export interface UserLogin {
+export interface LoginData {
   email: string;
   password: string;
 }
 
-export interface UserInitialState {
-  user: string | null;
-  isError: boolean;
-  isSuccess: boolean;
+export interface RegisterData extends LoginData {
+  name: string;
+  avatar: string;
+}
+
+export interface UserState {
+  token: string | null;
+  users: User[];
+  currentUser: User | null;
   isLoading: boolean;
-  message: string;
 }

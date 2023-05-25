@@ -1,10 +1,10 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Avatar,
   Typography,
   Grid,
-  TextField,
   Button,
   Link,
   Paper,
@@ -12,8 +12,11 @@ import {
 import { toast } from 'react-toastify';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useAppDispatch } from '../hooks/useAppDispatch';
-import { FormRow, UploadFileForm } from '../components';
+import { FormRow, UploadFileFormRow } from '../components';
 import { registerUser } from '../store/thunks/loginUser';
+import { uploadFile } from '../utils/helpers';
+import useAppSelector from '../hooks/useAppSelector';
+import { fetchAllUsers } from '../store/store';
 
 const initialValues = {
   name: '',
@@ -24,8 +27,25 @@ const initialValues = {
 
 const RegisterForm = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { users, currentUser, isLoading } = useAppSelector(
+    (state) => state.user
+  );
   const [values, setValues] = useState(initialValues);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    dispatch(fetchAllUsers());
+    if (currentUser) {
+      setTimeout(() => {
+        if (currentUser.role === 'customer') {
+          navigate('/');
+        } else {
+          navigate('/dashboard');
+        }
+      }, 3000);
+    }
+  }, [dispatch, currentUser, navigate]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -41,38 +61,36 @@ const RegisterForm = () => {
     }
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      if (avatarFile) {
-        const formData = new FormData();
-        formData.append('file', avatarFile);
-        // const response = await fetch(
-        //   'https://api.escuelajs.co/api/v1/files/upload',
-        //   {
-        //     method: 'POST',
-        //     body: formData,
-        //   }
-        // );
-        // const data = await response.json();
-        // const { location } = data;
-        // setValues((prevValues) => ({
-        //   ...prevValues,
-        //   avatar: location,
-        // }));
+      // Check if all form fields have been filled
+      if (!values.email || !values.password || !values.name || !avatarFile) {
+        console.log(values, avatarFile);
+        toast.error('Please fill in all the file');
+        return; // Exit the function
       }
-
-      // dispatch(registerUser(values))
-      //   .then(() => {
-      //     toast.success('Registration successful!');
-      //   })
-      //   .catch((error) => {
-      //     toast.error('Registration failed.');
-      //     console.error('Registration error:', error);
-      //   });
+      // Check if the email have been used before
+      const emailTemp = users.find((user) => user.email === values.email);
+      if (emailTemp) {
+        toast.error('Email have been used');
+        setValues(initialValues);
+        setAvatarFile(null);
+        return;
+      }
+      if (avatarFile) {
+        const location = await uploadFile(avatarFile);
+        if (location) {
+          dispatch(registerUser({ ...values, avatar: location }));
+        } else {
+          toast.error('Error in upload avatar');
+        }
+      }
+      setValues(initialValues);
+      setAvatarFile(null);
     } catch (error) {
-      toast.error('Avatar upload failed.');
-      console.error('Avatar upload error:', error);
+      toast.error('Registration failed with error ');
+      console.error('Registration error:', error);
     }
   };
 
@@ -119,17 +137,13 @@ const RegisterForm = () => {
             handleChange={handleChange}
           />
           {/* upload avatar form */}
-          <TextField
-            type="file"
-            fullWidth
-            onChange={handleAvatarChange}
-            inputProps={{ accept: 'image/*' }} // specify accepted file types, e.g., images
-          />
+          <UploadFileFormRow handleFileChange={handleAvatarChange} />
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={isLoading}
           >
             Sign Up
           </Button>

@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Grid,
   Link,
@@ -10,26 +10,52 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { toast } from 'react-toastify';
-import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { FormRow } from '../components';
+import { getUserProfile, loginUser } from '../store/store';
+import useAppSelector from '../hooks/useAppSelector';
+import { LoginData } from '../types/User';
+import { useNavigate } from 'react-router-dom';
 
-const initialValues = {
+const initialValues: LoginData = {
   email: '',
   password: '',
 };
 
 const LoginForm = () => {
   const [values, setValues] = useState(initialValues);
+  const { token, currentUser, isLoading } = useAppSelector(
+    (state) => state.user
+  );
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+  useEffect(() => {
+    if (token) {
+      dispatch(getUserProfile(token));
+      setTimeout(() => {
+        if (currentUser?.role === 'admin') {
+          navigate('/dashboard');
+        } else {
+          navigate('/');
+        }
+      }, 3000);
+    }
+  }, [token, currentUser, dispatch, navigate]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(event.target);
+    const { email, password } = values;
+    if (!email || !password) {
+      toast.error('Please fill in all fields');
+      return;
+    }
+    dispatch(loginUser({ email, password }));
   };
 
   return (
@@ -51,6 +77,13 @@ const LoginForm = () => {
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <FormRow
+            labelText="Email Address"
+            name="email"
+            type="email"
+            value={values.email}
+            handleChange={handleChange}
+          />
+          <FormRow
             labelText="Password"
             name="password"
             type="password"
@@ -62,6 +95,7 @@ const LoginForm = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={isLoading}
           >
             Sign In
           </Button>
