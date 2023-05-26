@@ -36,15 +36,6 @@ const RegisterForm = () => {
 
   useEffect(() => {
     dispatch(fetchAllUsers());
-    if (currentUser) {
-      setTimeout(() => {
-        if (currentUser.role === 'customer') {
-          navigate('/');
-        } else {
-          navigate('/dashboard');
-        }
-      }, 3000);
-    }
   }, [dispatch, currentUser, navigate]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

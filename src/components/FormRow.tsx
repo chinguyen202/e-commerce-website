@@ -14,7 +14,6 @@ const FormRow = ({ name, value, labelText, type, handleChange }: Props) => {
   return (
     <TextField
       margin="normal"
-      required
       fullWidth
       type={type}
       label={labelText}

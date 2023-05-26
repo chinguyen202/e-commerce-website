@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { LoginData, RegisterData } from '../../types/User';
 import customFetch from '../../utils/axios';
 import { UpdateUserData } from '../../types/User';
+import { RepeatOn } from '@mui/icons-material';
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
@@ -59,7 +60,9 @@ export const updateAvatar = createAsyncThunk(
   'user/updateAvatar',
   async (data: UpdateUserData, thunkAPI) => {
     try {
-      const response = customFetch.put(`/users/${data.id}`, { data });
+      const response = customFetch.put(`/users/${data.id}`, {
+        avatar: data.avatar,
+      });
       return (await response).data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data.message);
@@ -71,8 +74,11 @@ export const updateInfo = createAsyncThunk(
   'user/updateInfo',
   async (data: UpdateUserData, thunkAPI) => {
     try {
-      const response = customFetch.put(`/users/${data.id}`, { data });
-      return (await response).data;
+      const response = await customFetch.put(`/users/${data.id}`, {
+        email: data.email,
+        name: data.name,
+      });
+      return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.response.data.message);
     }

@@ -14,7 +14,9 @@ export interface LoginData {
 
 export interface UpdateUserData {
   id: number;
-  data: Partial<User>;
+  name?: string;
+  email?: string;
+  avatar?: string;
 }
 
 export interface RegisterData extends LoginData {

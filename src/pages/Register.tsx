@@ -13,7 +13,7 @@ const Register = () => {
   useEffect(() => {
     if (currentUser) {
       setTimeout(() => {
-        navigate('/dashboard');
+        navigate('/user');
       }, 3000);
     }
   }, [currentUser, navigate]);
