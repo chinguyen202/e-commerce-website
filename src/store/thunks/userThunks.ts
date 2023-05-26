@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { LoginData, RegisterData } from '../../types/User';
 import customFetch from '../../utils/axios';
 import { UpdateUserData } from '../../types/User';
-import { RepeatOn } from '@mui/icons-material';
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',

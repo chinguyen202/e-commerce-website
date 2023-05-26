@@ -17,8 +17,6 @@ import MenuItem from '@mui/material/MenuItem';
 import { links } from '../utils/constants';
 import useAppSelector from '../hooks/useAppSelector';
 import LoginButton from './LoginButton';
-import { useAppDispatch } from '../hooks/useAppDispatch';
-import { logoutUser } from '../store/reducers/userSlice';
 
 interface NavBarProps {
   mode: 'light' | 'dark';
@@ -29,11 +27,13 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const amount = useAppSelector((state) => state.cart.totalAmount);
-  const { isAuth, currentUser } = useAppSelector((state) => state.user);
+  const { isAuth } = useAppSelector((state) => state.user);
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -41,6 +41,7 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
   const handleModeChange = () => {
     setMode(mode === 'light' ? 'dark' : 'light');
   };
+
   return (
     <AppBar position="static">
       <Container maxWidth={false}>

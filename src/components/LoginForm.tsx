@@ -26,9 +26,7 @@ const LoginForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [values, setValues] = useState(initialValues);
-  const { isAuth, currentUser, isLoading } = useAppSelector(
-    (state) => state.user
-  );
+  const { currentUser, isLoading } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     if (currentUser) {

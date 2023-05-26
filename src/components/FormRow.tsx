@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { TextField, useTheme } from '@mui/material';
+import { TextField } from '@mui/material';
 
 type Props = {
   name: string;
@@ -10,7 +10,6 @@ type Props = {
 };
 
 const FormRow = ({ name, value, labelText, type, handleChange }: Props) => {
-  const theme = useTheme();
   return (
     <TextField
       margin="normal"
