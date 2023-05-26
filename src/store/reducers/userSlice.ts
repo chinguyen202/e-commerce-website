@@ -29,8 +29,8 @@ const userSlice = createSlice({
       state.isAuth = true;
     },
     logoutUser: (state) => {
-      state.currentUser = null;
       state.isAuth = false;
+      state.currentUser = null;
       removeTokenFromLocalStorage();
       toast.success('Log out succesfully!');
     },
