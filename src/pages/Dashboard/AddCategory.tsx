@@ -1,54 +1,5 @@
-// import { ChangeEvent, useState } from 'react';
-// import { Box, Typography, Button } from '@mui/material';
-// import { UploadFileFormRow, FormRow } from '../../components';
-
-// const AddCategory = () => {
-//   const [categoryName, setCategoryName] = useState<string>('');
-//   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {};
-//   const handleSubmit = () => {};
-
-//   return (
-//     <Box
-//       component="form"
-//       noValidate
-//       onSubmit={handleSubmit}
-//       sx={{
-//         display: 'flex',
-//         flexDirection: 'column',
-//         alignItems: 'center',
-//         gap: '1rem',
-//         padding: '1rem',
-//         // boxShadow: 1,
-//         borderRadius: '4px',
-//         bgcolor: 'background.paper',
-//       }}
-//     >
-//       <Typography variant="h4" sx={{ mb: '2rem' }}>
-//         Add a new category
-//       </Typography>
-//       <UploadFileFormRow handleFileChange={handleFileChange} />
-//       <FormRow
-//         labelText="Category name"
-//         name="name"
-//         type="text"
-//         value={categoryName}
-//         handleChange={(e) => setCategoryName(e.target.value)}
-//       />
-//       <Button
-//         variant="contained"
-//         color="secondary"
-//         onClick={handleSubmit}
-//         sx={{ mt: '2rem' }}
-//       >
-//         Submit
-//       </Button>
-//     </Box>
-//   );
-// };
-
-// export default AddCategory;
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { toast } from 'react-toastify';
 import {
   Table,
   TableContainer,
@@ -69,19 +20,28 @@ import {
 import { Edit, Delete } from '@mui/icons-material';
 import useAppSelector from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { fetchCategories, deleteCategory } from '../../store/store';
+import {
+  fetchCategories,
+  deleteCategory,
+  createCategory,
+  updateCategory,
+} from '../../store/store';
 import { FormRow, UploadFileFormRow } from '../../components';
+import { uploadFile } from '../../utils/helpers';
+import { Category } from '../../types/Category';
 
 const AddCategory = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const categories = useAppSelector((state) => state.category.categories);
+  const currentUser = useAppSelector((state) => state.user.currentUser);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
-    null
-  );
+  const [productFile, setProductFile] = useState<File | null>(null);
+  const [editFile, setEditFile] = useState<File | null>(null);
   const [categoryName, setCategoryName] = useState('');
+  const [currentName, setCurrentName] = useState('');
+  const [selectedCategoryId, setSelectedCategoryId] = useState(0);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   // Fetch categories on component mount
@@ -100,21 +60,81 @@ const AddCategory = () => {
     setPage(0);
   };
 
-  const handleFileChange = () => {};
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setProductFile(e.target.files[0]);
+    }
+  };
 
-  const handleEditCategory = (categoryId: number) => {
-    setSelectedCategoryId(categoryId);
-    setIsEditModalOpen(true);
+  const handleEditFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setEditFile(e.target.files[0]);
+    }
+  };
+
+  const handleEditCategory = (category: Category) => {
+    if (currentUser?.role === 'admin') {
+      setSelectedCategoryId(category.id);
+      setCurrentName(category.name);
+      setIsEditModalOpen(true);
+    } else {
+      toast.error('You should not do this');
+    }
   };
 
   const handleDeleteCategory = (categoryId: number) => {
-    dispatch(deleteCategory(categoryId));
+    if (currentUser?.role === 'admin') {
+      dispatch(deleteCategory(categoryId));
+    } else {
+      toast.error('Only admin can do this');
+    }
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      if (productFile) {
+        const url = await uploadFile(productFile);
+        if (url) {
+          dispatch(createCategory({ name: categoryName, image: url }));
+        } else {
+          toast.error('Error in uploading images');
+        }
+      }
+      setProductFile(null);
+    } catch (error) {
+      console.log(error);
+      toast.error('Error in creating category');
+    }
+  };
+
+  const handleEditSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      if (editFile) {
+        const url = await uploadFile(editFile);
+        if (url) {
+          dispatch(
+            updateCategory({
+              id: selectedCategoryId,
+              name: currentName,
+              image: url,
+            })
+          );
+        } else {
+          toast.error('Error in uploading images');
+        }
+      }
+      setEditFile(null);
+      handleCloseModal();
+    } catch (error) {
+      console.log(error);
+      toast.error('Error in editing category');
+    }
+  };
 
   const handleCloseModal = () => {
-    setSelectedCategoryId(null);
+    setSelectedCategoryId(0);
     setIsEditModalOpen(false);
   };
 
@@ -164,13 +184,12 @@ const AddCategory = () => {
                       borderRadius: '2rem',
                     }}
                   />
-                  {/* <img src={category.image} alt={category.name} /> */}
                 </TableCell>
                 <TableCell sx={{ fontSize: '1.2rem' }}>
                   {category.name}
                 </TableCell>
                 <TableCell sx={{ fontSize: '1.2rem' }}>
-                  <IconButton onClick={() => handleEditCategory(category.id)}>
+                  <IconButton onClick={() => handleEditCategory(category)}>
                     <Edit />
                   </IconButton>
                 </TableCell>
@@ -195,7 +214,6 @@ const AddCategory = () => {
       />
       <Box
         component="form"
-        noValidate
         onSubmit={handleSubmit}
         sx={{
           display: 'flex',
@@ -203,7 +221,6 @@ const AddCategory = () => {
           alignItems: 'center',
           gap: '1rem',
           padding: '1rem',
-          // boxShadow: 1,
           borderRadius: '4px',
           bgcolor: 'background.paper',
         }}
@@ -220,21 +237,22 @@ const AddCategory = () => {
           handleChange={(e) => setCategoryName(e.target.value)}
         />
         <Button
+          type="submit"
           variant="contained"
           color="secondary"
-          onClick={handleSubmit}
           sx={{ mt: '2rem' }}
         >
           Submit
         </Button>
       </Box>
-
       <Modal
         open={isEditModalOpen}
         onClose={handleCloseModal}
         sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
       >
         <Box
+          component="form"
+          onSubmit={handleEditSubmit}
           sx={{
             width: '50%',
             bgcolor: 'white',
@@ -245,20 +263,16 @@ const AddCategory = () => {
           <Typography variant="h6" align="center" sx={{ mb: 2 }}>
             Edit Category
           </Typography>
-          {/* Edit category form goes here */}
-          <UploadFileFormRow handleFileChange={handleFileChange} />
+          {/* Edit category form */}
+          <UploadFileFormRow handleFileChange={handleEditFileChange} />
           <FormRow
             labelText="Category name"
             name="name"
             type="text"
-            value={categoryName}
-            handleChange={(e) => setCategoryName(e.target.value)}
+            value={currentName}
+            handleChange={(e) => setCurrentName(e.target.value)}
           />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleCloseModal}
-          >
+          <Button variant="contained" color="primary" type="submit">
             Save
           </Button>
         </Box>
