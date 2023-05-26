@@ -13,7 +13,6 @@ import {
   Error,
   Register,
   Dashboard,
-  Stats,
   Profile,
   AddCategory,
   AddProduct,
@@ -96,15 +95,14 @@ const App = () => {
           <Route
             path="user"
             element={
-              <ProtectedRoute isAuth={isAuth}>
-                <Dashboard />
-              </ProtectedRoute>
+              // <ProtectedRoute isAuth={!isAuth}>
+              <Dashboard />
+              // </ProtectedRoute>
             }
           >
             <Route index element={<Profile />} />
             <Route path="add-category" element={<AddCategory />} />
             <Route path="add-product" element={<AddProduct />} />
-            <Route path="stats" element={<Stats />} />
             <Route path="customers" element={<CustomerList />} />
           </Route>
           <Route path="*" element={<Error />} />

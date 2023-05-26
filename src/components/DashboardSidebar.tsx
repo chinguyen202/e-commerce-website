@@ -1,6 +1,5 @@
 import { Box, Button, Grid } from '@mui/material';
 import LayersIcon from '@mui/icons-material/Layers';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -40,13 +39,9 @@ const DashboardSidebar = () => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'flex-start',
+            mt: '5rem',
           }}
         >
-          <SidebarItem
-            to="/user/stats"
-            icon={<DashboardIcon />}
-            primary="Dashboard"
-          />
           <SidebarItem
             to="/user/customers"
             icon={<PeopleAltIcon />}
@@ -55,12 +50,12 @@ const DashboardSidebar = () => {
           <SidebarItem
             to="/user/add-category"
             icon={<CategoryIcon />}
-            primary="Add Category"
+            primary="Categories"
           />
           <SidebarItem
             to="/user/add-product"
             icon={<LayersIcon />}
-            primary="Add Product"
+            primary="Products"
           />
         </Box>
       ) : (

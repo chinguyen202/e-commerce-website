@@ -5,10 +5,11 @@ import { ProductsGridView, ProductsListView } from '../components';
 type ProductsListProps = {
   products: Product[];
   gridView: boolean;
+  isLoading: boolean;
 };
 
-const ProductList = ({ products, gridView }: ProductsListProps) => {
-  if (products.length < 1) {
+const ProductList = ({ products, gridView, isLoading }: ProductsListProps) => {
+  if (products.length < 1 && !isLoading) {
     return <Typography variant="h4"> Sorry, no product found.</Typography>;
   }
 

@@ -1,5 +1,5 @@
 export interface User {
-  id: string;
+  id: number;
   name: string;
   role: 'admin' | 'customer';
   email: string;
@@ -12,8 +12,9 @@ export interface LoginData {
   password: string;
 }
 
-export interface UpdateUserData extends LoginData {
+export interface UpdateUserData {
   id: number;
+  data: Partial<User>;
 }
 
 export interface RegisterData extends LoginData {

@@ -1,11 +1,8 @@
 import { Category } from './Category';
 
 export interface ProductData {
-  title: string;
-  price: number;
-  description: string;
-  categoryId: number;
-  images: string[];
+  id: number;
+  data: Partial<Product>;
 }
 export interface Product {
   id: number;

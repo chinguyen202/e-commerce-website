@@ -30,7 +30,7 @@ interface SidebarItemProps {
 
 const SidebarItem = ({ to, icon, primary }: SidebarItemProps) => {
   return (
-    <Link to={to}>
+    <Link to={to} style={{ textDecoration: 'none' }}>
       <StyledListItemButton>
         <ListItemIcon>{icon}</ListItemIcon>
         <StyledListItemText primary={primary} />

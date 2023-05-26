@@ -11,15 +11,17 @@ import {
 } from '../components';
 
 const Products = () => {
+  const dispatch = useAppDispatch();
   const {
     products,
     gridView,
     isSort,
+    isLoading,
     sortedProducts,
     isFilter,
     filterProducts,
   } = useAppSelector((state) => state.products);
-  const dispatch = useAppDispatch();
+  const categories = useAppSelector((state) => state.category.categories);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -29,31 +31,47 @@ const Products = () => {
       <CurrentLocation name="Products" singleProduct={false} />
       <Grid container spacing={2}>
         <Grid item xs={3}>
-          <FilterProductsSideBar products={products} />
+          <FilterProductsSideBar categories={categories} />
         </Grid>
         <Grid item xs={9}>
           {isFilter && !isSort && (
             <>
               <Sort products={filterProducts} gridView={gridView} />
-              <ProductList products={filterProducts} gridView={gridView} />
+              <ProductList
+                products={filterProducts}
+                gridView={gridView}
+                isLoading={isLoading}
+              />
             </>
           )}
           {isFilter && isSort && (
             <>
               <Sort products={filterProducts} gridView={gridView} />
-              <ProductList products={sortedProducts} gridView={gridView} />
+              <ProductList
+                products={sortedProducts}
+                gridView={gridView}
+                isLoading={isLoading}
+              />
             </>
           )}
           {isSort && !isFilter && (
             <>
               <Sort products={products} gridView={gridView} />
-              <ProductList products={sortedProducts} gridView={gridView} />
+              <ProductList
+                products={sortedProducts}
+                gridView={gridView}
+                isLoading={isLoading}
+              />
             </>
           )}
           {!isSort && !isFilter && (
             <>
               <Sort products={products} gridView={gridView} />
-              <ProductList products={products} gridView={gridView} />
+              <ProductList
+                products={products}
+                gridView={gridView}
+                isLoading={isLoading}
+              />
             </>
           )}
         </Grid>

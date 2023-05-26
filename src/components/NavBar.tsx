@@ -29,7 +29,7 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const amount = useAppSelector((state) => state.cart.totalAmount);
-  const isAuth = useAppSelector((state) => state.user.isAuth);
+  const { isAuth, currentUser } = useAppSelector((state) => state.user);
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -86,6 +86,30 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
                   </Typography>
                 </MenuItem>
               ))}
+              {isAuth && (
+                <MenuItem
+                  component={Link}
+                  to="/checkout"
+                  key="checkout"
+                  onClick={handleCloseNavMenu}
+                >
+                  <Typography key="checkout" textAlign="center">
+                    Checkout
+                  </Typography>
+                </MenuItem>
+              )}
+              {isAuth && (
+                <MenuItem
+                  component={Link}
+                  to="/user"
+                  key="user"
+                  onClick={handleCloseNavMenu}
+                >
+                  <Typography key="user" textAlign="center">
+                    Profile
+                  </Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
           <Link
@@ -209,7 +233,6 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
                 <IconButton
                   sx={{ p: 0, marginRight: '1rem', position: 'relative' }}
                 >
-                  <Typography>Cart</Typography>
                   <ShoppingCartIcon sx={{ fontSize: 40 }} color="secondary" />
                   <span
                     className="cart-value"

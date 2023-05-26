@@ -8,10 +8,7 @@ import Services from '../components/Services';
 
 const Home = () => {
   const dispatch = useAppDispatch();
-  const categories = useAppSelector((state) => state.products.categories);
-  const isLoading = useAppSelector((state) => state.products.isLoading);
-  const error = useAppSelector((state) => state.products.error);
-  const isError = useAppSelector((state) => state.products.isError);
+  const { categories, isLoading } = useAppSelector((state) => state.category);
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -21,9 +18,6 @@ const Home = () => {
     return <Loading />;
   }
 
-  if (isError) {
-    toast.error(error);
-  }
   return (
     <>
       <Hero />

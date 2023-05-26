@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import customFetch from '../../utils/axios';
-import { ProductData } from '../../types/Product';
+import { Product, ProductData } from '../../types/Product';
 
 export const createProduct = createAsyncThunk(
   'products/createProduct',
@@ -46,7 +46,7 @@ export const fetchSingleProduct = createAsyncThunk(
 
 export const updateProduct = createAsyncThunk(
   'product/update',
-  async (data: ProductData, thunkAPI) => {
+  async (data: Product, thunkAPI) => {
     try {
       const response = await customFetch.put(`/products/${data.id}`, data);
       return response.data;

@@ -23,6 +23,7 @@ import UploadFileFormRow from './UploadFileForm';
 import DashboardSidebar from './DashboardSidebar';
 import SidebarItem from './SidebarItem';
 import CustomerList from './CustomerList';
+import CheckoutForm from './CheckoutForm';
 
 export {
   Footer,
@@ -50,4 +51,5 @@ export {
   DashboardSidebar,
   SidebarItem,
   CustomerList,
+  CheckoutForm,
 };

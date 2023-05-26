@@ -5,12 +5,12 @@ import {
   getUserProfile,
   loginUser,
   registerUser,
-  updateUser,
+  updateInfo,
+  updateAvatar,
 } from '../store';
 import { UserState } from '../../types/User';
 import {
   addTokenToLocalStorage,
-  getTokenFromStorage,
   removeTokenFromLocalStorage,
 } from '../../utils/localStorage';
 
@@ -29,7 +29,7 @@ const userSlice = createSlice({
       state.isAuth = true;
     },
     logoutUser: (state) => {
-      state.currentUser = initialState.currentUser;
+      state.currentUser = null;
       state.isAuth = false;
       removeTokenFromLocalStorage();
       toast.success('Log out succesfully!');
@@ -88,14 +88,28 @@ const userSlice = createSlice({
         const errorMessage = action.payload as string;
         toast.error(errorMessage);
       })
-      .addCase(updateUser.pending, (state) => {
+      .addCase(updateAvatar.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updateUser.fulfilled, (state, action) => {
+      .addCase(updateAvatar.fulfilled, (state, action) => {
         state.isLoading = false;
         state.currentUser = action.payload;
+        toast.success('Update avatar successfully!');
       })
-      .addCase(updateUser.rejected, (state, action) => {
+      .addCase(updateAvatar.rejected, (state, action) => {
+        state.isLoading = false;
+        const error = action.payload as string;
+        toast.error(error);
+      })
+      .addCase(updateInfo.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateInfo.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.currentUser = action.payload;
+        toast.success('Update info successfully!');
+      })
+      .addCase(updateInfo.rejected, (state, action) => {
         state.isLoading = false;
         const error = action.payload as string;
         toast.error(error);

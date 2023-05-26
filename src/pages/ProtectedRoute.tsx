@@ -1,13 +1,13 @@
 import { Navigate } from 'react-router-dom';
-import useAppSelector from '../hooks/useAppSelector';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
   isAuth: boolean;
 }
 
-const ProtectedRoute = ({ isAuth, children }: ProtectedRouteProps) => {
+const ProtectedRoute = ({ children, isAuth }: ProtectedRouteProps) => {
   if (!isAuth) {
+    console.log('IS AUTH', isAuth);
     return <Navigate to="/" />;
   }
   return <>{children}</>;

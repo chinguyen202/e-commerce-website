@@ -10,7 +10,6 @@ import Dashboard from './Dashboard/Dashboard';
 import AddCategory from './Dashboard/AddCategory';
 import AddProduct from './Dashboard/AddProduct';
 import Profile from './Dashboard/Profile';
-import Stats from './Dashboard/Stats';
 import ProtectedRoute from './ProtectedRoute';
 
 export {
@@ -26,6 +25,5 @@ export {
   AddCategory,
   AddProduct,
   Profile,
-  Stats,
   ProtectedRoute,
 };

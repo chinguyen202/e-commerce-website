@@ -7,6 +7,7 @@ import {
   TableRow,
   TablePagination,
   TableBody,
+  Typography,
 } from '@mui/material';
 import useAppSelector from '../hooks/useAppSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
@@ -15,7 +16,7 @@ import { fetchAllUsers } from '../store/store';
 const CustomerList = () => {
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(15);
   const users = useAppSelector((state) => state.user.users);
   useEffect(() => {
     if (users.length === 0) {
@@ -39,23 +40,29 @@ const CustomerList = () => {
 
   return (
     <>
+      <Typography
+        variant="h3"
+        sx={{ textAlign: 'center', mt: '2rem', mb: '2rem' }}
+      >
+        List of customers
+      </Typography>
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Role</TableCell>
+              <TableCell sx={{ fontSize: '1.2rem' }}>ID</TableCell>
+              <TableCell sx={{ fontSize: '1.2rem' }}>Name</TableCell>
+              <TableCell sx={{ fontSize: '1.2rem' }}>Email</TableCell>
+              <TableCell sx={{ fontSize: '1.2rem' }}>Role</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {displayedUsers.map((user) => (
               <TableRow key={user.id}>
-                <TableCell>{user.id}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.role}</TableCell>
+                <TableCell sx={{ fontSize: '1.2rem' }}>{user.id}</TableCell>
+                <TableCell sx={{ fontSize: '1.2rem' }}>{user.name}</TableCell>
+                <TableCell sx={{ fontSize: '1.2rem' }}>{user.email}</TableCell>
+                <TableCell sx={{ fontSize: '1.2rem' }}>{user.role}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -23,10 +23,13 @@ import {
 } from '../store/reducers/productsSlice';
 import { Category } from '../types/Category';
 
-const FilterProductsSideBar = ({ products }: ProductsProps) => {
+interface FilterProductsSideBarProps {
+  categories: Category[];
+}
+
+const FilterProductsSideBar = ({ categories }: FilterProductsSideBarProps) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  const categories = useAppSelector((state) => state.products.categories);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
