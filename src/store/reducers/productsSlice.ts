@@ -1,6 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import { ProductsState, SortPayload, FilterOptions } from '../../types/Product';
-import { fetchCategories, fetchProducts, fetchSingleProduct } from '../store';
+import {
+  createProduct,
+  deleteProduct,
+  fetchProducts,
+  fetchSingleProduct,
+  updateProduct,
+} from '../store';
 import { Category } from '../../types/Category';
 
 const initialState: ProductsState = {
@@ -134,7 +141,7 @@ const productsSlice = createSlice({
         });
       }
     },
-    clearFilters: (state, action) => {
+    clearFilters: (state) => {
       state.filterProducts = initialState.filterProducts;
       state.isFilter = initialState.isFilter;
       state.isSort = initialState.isSort;
@@ -143,7 +150,7 @@ const productsSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchProducts.pending, (state, action) => {
+      .addCase(fetchProducts.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
@@ -152,10 +159,10 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.isError = true;
-        state.error = action.error?.message || 'Unknown error occurred';
         state.isLoading = false;
+        toast.error(action.payload as string);
       })
-      .addCase(fetchSingleProduct.pending, (state, action) => {
+      .addCase(fetchSingleProduct.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(fetchSingleProduct.fulfilled, (state, action) => {
@@ -165,19 +172,40 @@ const productsSlice = createSlice({
       .addCase(fetchSingleProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.error = action.error?.message || 'Unknown error occurred';
+        toast.error(action.payload as string);
       })
-      .addCase(fetchCategories.pending, (state, action) => {
+      .addCase(createProduct.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(fetchCategories.fulfilled, (state, action) => {
+      .addCase(createProduct.fulfilled, (state) => {
         state.isLoading = false;
-        state.categories = action.payload;
+        toast.success('Create product success');
       })
-      .addCase(fetchCategories.rejected, (state, action) => {
-        state.isLoading = false;
+      .addCase(createProduct.rejected, (state, action) => {
         state.isError = true;
-        state.error = action.error.message;
+        toast.error(action.payload as string);
+      })
+      .addCase(updateProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateProduct.fulfilled, (state) => {
+        state.isLoading = false;
+        toast.success('Update product success');
+      })
+      .addCase(updateProduct.rejected, (state, action) => {
+        state.isError = true;
+        toast.error(action.payload as string);
+      })
+      .addCase(deleteProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteProduct.fulfilled, (state) => {
+        state.isLoading = false;
+        toast.success('Create product success');
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.isError = true;
+        toast.error(action.payload as string);
       });
   },
 });
