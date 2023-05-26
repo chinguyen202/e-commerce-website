@@ -1,36 +1,65 @@
-import { ChangeEvent, useEffect, useState } from 'react';
-import {
-  Box,
-  Typography,
-  Button,
-  Select,
-  MenuItem,
-  InputLabel,
-} from '@mui/material';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { Box, Typography, Button } from '@mui/material';
 import { UploadFileFormRow, FormRow } from '../../components';
 import useAppSelector from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { fetchCategories } from '../../store/store';
+import { createProduct, fetchCategories } from '../../store/store';
+import { uploadFile } from '../../utils/helpers';
 import { Category } from '../../types/Category';
 
 const AddProduct = () => {
   const dispatch = useAppDispatch();
   const [values, setValues] = useState({
-    name: '',
-    price: 0,
+    title: '',
+    price: undefined,
     description: '',
-    categoryId: 0,
   });
+  const [categoryId, setCategoryId] = useState<number | undefined>(undefined);
+  const [file, setFile] = useState<File | null>(null);
   const { categories } = useAppSelector((state) => state.category);
+
   useEffect(() => {
     if (categories.length === 0) {
       dispatch(fetchCategories());
     }
   }, [categories, dispatch]);
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {};
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {};
 
-  const handleSubmit = () => {};
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const handleSelect = (category: Category) => {
+    setCategoryId(category.id);
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      if (file) {
+        const url = await uploadFile(file);
+        if (url) {
+          dispatch(
+            createProduct({
+              ...values,
+              price: parseInt(values.price ?? '0'),
+              categoryId: categoryId,
+              images: [url],
+            })
+          );
+        }
+      }
+    } catch (error) {}
+  };
 
   return (
     <Box
@@ -53,16 +82,16 @@ const AddProduct = () => {
       </Typography>
       <FormRow
         labelText="Product name"
-        name="name"
+        name="title"
         type="text"
-        value={values.name}
+        value={values.title}
         handleChange={handleInputChange}
       />
       <FormRow
         labelText="Price"
         name="price"
         type="number"
-        value={String(values.price)}
+        value={values.price ?? ''}
         handleChange={handleInputChange}
       />
       <FormRow
@@ -72,12 +101,33 @@ const AddProduct = () => {
         value={values.description}
         handleChange={handleInputChange}
       />
-
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          alignContent: 'flex-start',
+        }}
+      >
+        <Button color="secondary" sx={{ fontSize: '1.2rem' }}>
+          Select categories
+        </Button>
+        {categories.map((category) => (
+          <Button
+            color="primary"
+            sx={{ fontSize: '1.2rem', bgcolor: '#a3b18a', mr: '1rem' }}
+            key={category.id}
+            onClick={() => handleSelect(category)}
+          >
+            {category.name}
+          </Button>
+        ))}
+      </Box>
       <UploadFileFormRow handleFileChange={handleFileChange} />
       <Button
+        type="submit"
         variant="contained"
         color="secondary"
-        onClick={handleSubmit}
         sx={{ mt: '2rem' }}
       >
         Submit

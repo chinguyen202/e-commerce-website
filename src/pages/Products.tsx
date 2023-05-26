@@ -25,7 +25,8 @@ const Products = () => {
 
   useEffect(() => {
     dispatch(fetchProducts());
-  }, [dispatch]);
+  }, [dispatch, products, filterProducts, sortedProducts, isFilter, isSort]);
+
   return (
     <>
       <CurrentLocation name="Products" singleProduct={false} />
