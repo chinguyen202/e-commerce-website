@@ -77,7 +77,7 @@ const AddCategory = () => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector((state) => state.category.categories);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     null
   );

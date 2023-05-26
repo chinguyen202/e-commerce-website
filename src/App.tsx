@@ -72,6 +72,18 @@ const App = () => {
               main: '#9d0208',
             },
           },
+    components: {
+      MuiCheckbox: {
+        styleOverrides: {
+          root: {
+            color: '#344e41',
+            '&.Mui-checked': {
+              color: '#ff0000',
+            },
+          },
+        },
+      },
+    },
   });
   return (
     <ThemeProvider theme={dynamicTheme}>

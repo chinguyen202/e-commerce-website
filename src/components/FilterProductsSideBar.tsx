@@ -12,9 +12,7 @@ import {
 } from '@mui/material';
 import SearchBox from './SearchBox';
 import { useAppDispatch } from '../hooks/useAppDispatch';
-import useAppSelector from '../hooks/useAppSelector';
 import { fetchCategories } from '../store/store';
-import { ProductsProps } from '../types/Product';
 import {
   updateFilters,
   searchProduct,
@@ -34,15 +32,17 @@ const FilterProductsSideBar = ({ categories }: FilterProductsSideBarProps) => {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
   );
-  const [priceRange, setPriceRange] = useState([0, 0]);
+  const [priceRange, setPriceRange] = useState(['', '']);
 
   useEffect(() => {
     if (categories.length === 0) dispatch(fetchCategories());
   });
+
   const setQuery = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setSearchQuery(e.target.value);
   };
+
   const handleSearch = () => {
     dispatch(searchProduct(searchQuery));
     setSearchQuery('');
@@ -57,8 +57,8 @@ const FilterProductsSideBar = ({ categories }: FilterProductsSideBarProps) => {
       setSelectedCategory(selectedCategory);
       dispatch(
         updateFilters({
-          minPrice: priceRange[0],
-          maxPrice: priceRange[1],
+          minPrice: parseInt(priceRange[0]),
+          maxPrice: parseInt(priceRange[1]),
           category: selectedCategory || null,
         })
       );
@@ -69,22 +69,22 @@ const FilterProductsSideBar = ({ categories }: FilterProductsSideBarProps) => {
   const handlePriceRangeChange = () => {
     dispatch(
       updateFilters({
-        minPrice: priceRange[0],
-        maxPrice: priceRange[1],
+        minPrice: parseInt(priceRange[0]),
+        maxPrice: parseInt(priceRange[1]),
         category: selectedCategory || null,
       })
     );
     dispatch(
       filterProductByPriceRange({
-        minPrice: priceRange[0],
-        maxPrice: priceRange[1],
+        minPrice: parseInt(priceRange[0]),
+        maxPrice: parseInt(priceRange[1]),
         category: selectedCategory || null,
       })
     );
   };
 
   const clearFilters = () => {
-    setPriceRange([0, 0]);
+    setPriceRange(['', '']);
     setSelectedCategory(null);
     dispatch({ type: 'products/clearFilters' });
   };
@@ -134,18 +134,14 @@ const FilterProductsSideBar = ({ categories }: FilterProductsSideBarProps) => {
           <TextField
             type="number"
             value={priceRange[0]} // Convert number to string
-            onChange={(e) =>
-              setPriceRange([parseInt(e.target.value), priceRange[1]])
-            }
+            onChange={(e) => setPriceRange([e.target.value, priceRange[1]])}
             label="Min Price"
             variant="outlined"
           />
           <TextField
             type="number"
             value={priceRange[1]} // Convert number to string
-            onChange={(e) =>
-              setPriceRange([priceRange[0], parseInt(e.target.value)])
-            }
+            onChange={(e) => setPriceRange([priceRange[0], e.target.value])}
             label="Max Price"
             variant="outlined"
           />

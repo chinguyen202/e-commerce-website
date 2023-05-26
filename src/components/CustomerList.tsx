@@ -16,7 +16,7 @@ import { fetchAllUsers } from '../store/store';
 const CustomerList = () => {
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(15);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const users = useAppSelector((state) => state.user.users);
   useEffect(() => {
     if (users.length === 0) {

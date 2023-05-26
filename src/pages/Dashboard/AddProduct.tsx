@@ -11,6 +11,7 @@ import { UploadFileFormRow, FormRow } from '../../components';
 import useAppSelector from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { fetchCategories } from '../../store/store';
+import { Category } from '../../types/Category';
 
 const AddProduct = () => {
   const dispatch = useAppDispatch();
@@ -27,8 +28,8 @@ const AddProduct = () => {
     }
   }, [categories, dispatch]);
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {};
-  const handleSelect = () => {};
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {};
+
   const handleSubmit = () => {};
 
   return (
@@ -71,14 +72,7 @@ const AddProduct = () => {
         value={values.description}
         handleChange={handleInputChange}
       />
-      <InputLabel>Categories</InputLabel>
-      <Select value={values.categoryId} onChange={handleSelect}>
-        {categories.map((category) => (
-          <MenuItem key={category.id} value={category.name}>
-            {category.name}
-          </MenuItem>
-        ))}
-      </Select>
+
       <UploadFileFormRow handleFileChange={handleFileChange} />
       <Button
         variant="contained"
