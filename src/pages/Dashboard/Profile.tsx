@@ -5,7 +5,7 @@ import useAppSelector from '../../hooks/useAppSelector';
 import { FormRow, UploadFileFormRow } from '../../components';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { uploadFile } from '../../utils/helpers';
-import { updateAvatar, updateInfo } from '../../store/store';
+import { updateInfo } from '../../store/store';
 import { User } from '../../types/User';
 
 const Profile = () => {
@@ -31,7 +31,7 @@ const Profile = () => {
       if (avatar) {
         const location = await uploadFile(avatar);
         if (location && currentUser) {
-          dispatch(updateAvatar({ id: currentUser.id, avatar: location }));
+          dispatch(updateInfo({ id: currentUser.id, avatar: location }));
         } else {
           toast.error('Fail to update avatar, please try again');
         }

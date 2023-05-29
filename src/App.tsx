@@ -23,23 +23,20 @@ import useAppSelector from './hooks/useAppSelector';
 import { useAppDispatch } from './hooks/useAppDispatch';
 import { calculateTotal } from './store/reducers/cartSlice';
 import { getTokenFromStorage } from './utils/localStorage';
-import { updateIsAuth } from './store/reducers/userSlice';
 import { getUserProfile } from './store/store';
 
 const App = () => {
   const dispatch = useAppDispatch();
   const [mode, setMode] = useState<'light' | 'dark'>('light');
   const { cartItems } = useAppSelector((state) => state.cart);
-  const { isAuth, currentUser } = useAppSelector((state) => state.user);
+  const { isAuth, currentUser, token } = useAppSelector((state) => state.user);
 
   useEffect(() => {
-    const token = getTokenFromStorage();
     if (token) {
-      dispatch(updateIsAuth());
       dispatch(getUserProfile(token));
     }
     dispatch(calculateTotal());
-  }, [cartItems, dispatch, currentUser, isAuth]);
+  }, [cartItems, dispatch, currentUser, isAuth, token]);
 
   const dynamicTheme = createTheme({
     palette:
@@ -107,9 +104,9 @@ const App = () => {
           <Route
             path="user"
             element={
-              // <ProtectedRoute isAuth={!isAuth}>
-              <Dashboard />
-              // </ProtectedRoute>
+              <ProtectedRoute isAuth={isAuth}>
+                <Dashboard />
+              </ProtectedRoute>
             }
           >
             <Route index element={<Profile />} />

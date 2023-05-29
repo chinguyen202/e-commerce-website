@@ -32,8 +32,6 @@ export interface ProductsState {
   isSort: boolean;
   gridView: boolean;
   filterOptions: FilterOptions;
-  categories: Category[];
-  productsByCategory: Product[];
 }
 
 export type ProductsProps = {

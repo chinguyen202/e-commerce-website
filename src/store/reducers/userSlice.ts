@@ -6,44 +6,44 @@ import {
   loginUser,
   registerUser,
   updateInfo,
-  updateAvatar,
 } from '../store';
 import { UserState } from '../../types/User';
 import {
   addTokenToLocalStorage,
+  getTokenFromStorage,
   removeTokenFromLocalStorage,
 } from '../../utils/localStorage';
 
 const initialState: UserState = {
-  isAuth: false,
+  isAuth: getTokenFromStorage() ? true : false,
   users: [],
   isLoading: false,
   currentUser: null,
+  token: getTokenFromStorage() ?? undefined,
 };
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    updateIsAuth: (state) => {
-      state.isAuth = true;
-    },
     logoutUser: (state) => {
       state.isAuth = false;
       state.currentUser = null;
+      state.token = undefined;
       removeTokenFromLocalStorage();
       toast.success('Log out succesfully!');
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(loginUser.pending, (state) => {
+      .addCase(loginUser.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         const { access_token } = action.payload;
         state.isLoading = false;
         state.isAuth = true;
+        state.token = access_token;
         addTokenToLocalStorage(access_token);
         toast.success(`Welcome back`);
       })
@@ -88,19 +88,6 @@ const userSlice = createSlice({
         const errorMessage = action.payload as string;
         toast.error(errorMessage);
       })
-      .addCase(updateAvatar.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(updateAvatar.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.currentUser = action.payload;
-        toast.success('Update avatar successfully!');
-      })
-      .addCase(updateAvatar.rejected, (state, action) => {
-        state.isLoading = false;
-        const error = action.payload as string;
-        toast.error(error);
-      })
       .addCase(updateInfo.pending, (state) => {
         state.isLoading = true;
       })
@@ -118,5 +105,4 @@ const userSlice = createSlice({
 });
 
 export const { logoutUser } = userSlice.actions;
-export const { updateIsAuth } = userSlice.actions;
 export default userSlice.reducer;

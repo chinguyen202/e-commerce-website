@@ -55,18 +55,6 @@ export const fetchAllUsers = createAsyncThunk(
   }
 );
 
-export const updateAvatar = createAsyncThunk(
-  'user/updateAvatar',
-  async (data: UpdateUserData, thunkAPI) => {
-    try {
-      const response = customFetch.put(`/users/${data.id}`, data);
-      return (await response).data;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response.data.message);
-    }
-  }
-);
-
 export const updateInfo = createAsyncThunk(
   'user/updateInfo',
   async (data: UpdateUserData, thunkAPI) => {
