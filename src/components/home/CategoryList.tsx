@@ -8,7 +8,7 @@ import {
   CardContent,
   useTheme,
 } from '@mui/material';
-import { Category } from '../types/Category';
+import { Category } from '../../types/Category';
 
 const carouselSettings = {
   responsive: {
@@ -54,6 +54,7 @@ const CategoryList = ({ categories }: CategoryListProps) => {
         alignContent: 'center',
         textAlign: 'center',
         color: theme.palette.secondary.main,
+        bgcolor: theme.palette.primary.main,
       }}
     >
       <Typography variant="h3" sx={{ margin: '2rem' }}>

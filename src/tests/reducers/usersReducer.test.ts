@@ -1,23 +1,17 @@
 import userReducer from '../../store/reducers/userSlice';
 import { fetchAllUsers } from '../../store/store';
-import MockAdapter from 'axios-mock-adapter';
 import customFetch from '../../utils/axios';
 import { UserState } from '../../types/User';
 import { getTokenFromStorage } from '../../utils/localStorage';
 
 describe('user reducer functionality', () => {
-  let fakeAxios: MockAdapter;
   const initialState: UserState = {
     isAuth: getTokenFromStorage() ? true : false,
     users: [],
     isLoading: false,
     currentUser: null,
   };
-  beforeEach(() => {
-    fakeAxios = new MockAdapter(customFetch);
-    fakeAxios.onGet('/users').reply(200, userResponse);
-    fakeAxios.onGet('/users/1').reply(200, userResponse);
-  });
+
   const userResponse = [
     {
       id: 1,

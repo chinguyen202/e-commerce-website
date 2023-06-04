@@ -14,8 +14,6 @@ describe('test products reducer functionality', () => {
     isLoading: false,
     isError: false,
     error: '',
-    productsByCategory: [],
-    categories: [],
     filterOptions: {
       minPrice: 0,
       maxPrice: 0,

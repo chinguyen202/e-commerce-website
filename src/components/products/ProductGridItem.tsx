@@ -1,6 +1,6 @@
 import { Card, CardMedia, CardContent, Typography } from '@mui/material';
-import { Product } from '../types/Product';
-import { formatPrice } from '../utils/helpers';
+import { Product } from '../../types/Product';
+import { formatPrice } from '../../utils/helpers';
 
 type ProductItemProps = {
   product: Product;

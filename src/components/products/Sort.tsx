@@ -12,9 +12,9 @@ import {
 import GridViewIcon from '@mui/icons-material/GridView';
 import ListIcon from '@mui/icons-material/List';
 import SortIcon from '@mui/icons-material/Sort';
-import { Product } from '../types/Product';
-import { useAppDispatch } from '../hooks/useAppDispatch';
-import { sortProducts, setGridView } from '../store/reducers/productsSlice';
+import { Product } from '../../types/Product';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { sortProducts, setGridView } from '../../store/reducers/productsSlice';
 
 type SortProps = {
   products: Product[];

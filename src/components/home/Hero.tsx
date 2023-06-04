@@ -64,7 +64,7 @@ const Hero = () => {
             padding: '2rem',
           }}
           alt="hero image"
-          src={require('../assets/hero.jpg')}
+          src={require('../../assets/hero.jpg')}
         />
       </Grid>
     </Grid>

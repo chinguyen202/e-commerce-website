@@ -11,15 +11,15 @@ import {
   Button,
 } from '@mui/material';
 import SearchBox from './SearchBox';
-import { useAppDispatch } from '../hooks/useAppDispatch';
-import { fetchCategories } from '../store/store';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { fetchCategories } from '../../store/store';
 import {
   updateFilters,
   searchProduct,
   filterProductByCategory,
   filterProductByPriceRange,
-} from '../store/reducers/productsSlice';
-import { Category } from '../types/Category';
+} from '../../store/reducers/productsSlice';
+import { Category } from '../../types/Category';
 
 interface FilterProductsSideBarProps {
   categories: Category[];

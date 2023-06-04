@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
-import { Product } from '../types/Product';
-import { ProductsGridView, ProductsListView } from '../components';
+import { Product } from '../../types/Product';
+import { ProductsGridView, ProductsListView } from '..';
 
 type ProductsListProps = {
   products: Product[];

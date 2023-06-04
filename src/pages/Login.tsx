@@ -1,7 +1,7 @@
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import { SideImage } from '../components';
-import LoginForm from '../components/LoginForm';
+import LoginForm from '../components/login-register/LoginForm';
 
 const Login = () => {
   return (

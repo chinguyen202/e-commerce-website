@@ -14,8 +14,8 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { links } from '../utils/constants';
-import useAppSelector from '../hooks/useAppSelector';
+import { links } from '../../utils/constants';
+import useAppSelector from '../../hooks/useAppSelector';
 import LoginButton from './LoginButton';
 
 interface NavBarProps {
@@ -129,7 +129,7 @@ const NavBar = ({ mode, setMode }: NavBarProps) => {
                   display: { xs: 'none', md: 'flex' },
                 }}
                 alt="Your logo."
-                src={require('../assets/platzi.png')}
+                src={require('../../assets/platzi.png')}
               />
               <Typography
                 variant="h6"

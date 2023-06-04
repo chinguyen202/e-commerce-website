@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import ProductGridItem from './ProductGridItem';
-import { ProductsProps } from '../types/Product';
+import { ProductsProps } from '../../types/Product';
 
 const ProductsGridView = ({ products }: ProductsProps) => {
   return (

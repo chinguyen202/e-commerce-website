@@ -16,7 +16,7 @@ const SignupPromotion = () => {
             padding: '2rem',
           }}
           alt="Promotional Image"
-          src={require('../assets/promotion.jpg')}
+          src={require('../../assets/promotion.jpg')}
         />
       </Grid>
       <Grid item xs={12} md={6}>

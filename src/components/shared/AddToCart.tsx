@@ -9,16 +9,16 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { CartItemI } from '../types/Cart';
-import { useAppDispatch } from '../hooks/useAppDispatch';
+import { CartItemI } from '../../types/Cart';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 import {
   decreaseAmount,
   increaseAmount,
   removeItem,
   addItem,
-} from '../store/reducers/cartSlice';
-import useAppSelector from '../hooks/useAppSelector';
-import { Product } from '../types/Product';
+} from '../../store/reducers/cartSlice';
+import useAppSelector from '../../hooks/useAppSelector';
+import { Product } from '../../types/Product';
 
 type Props = {
   item: CartItemI | Product;

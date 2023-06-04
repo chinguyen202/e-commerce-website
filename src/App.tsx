@@ -22,7 +22,6 @@ import { Navbar, Footer, CustomerList } from './components';
 import useAppSelector from './hooks/useAppSelector';
 import { useAppDispatch } from './hooks/useAppDispatch';
 import { calculateTotal } from './store/reducers/cartSlice';
-import { getTokenFromStorage } from './utils/localStorage';
 import { getUserProfile } from './store/store';
 
 const App = () => {

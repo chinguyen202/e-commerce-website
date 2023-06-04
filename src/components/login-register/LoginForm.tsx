@@ -11,11 +11,11 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { toast } from 'react-toastify';
-import { useAppDispatch } from '../hooks/useAppDispatch';
-import { FormRow } from '../components';
-import { loginUser } from '../store/store';
-import useAppSelector from '../hooks/useAppSelector';
-import { LoginData } from '../types/User';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { FormRow } from '..';
+import { loginUser } from '../../store/store';
+import useAppSelector from '../../hooks/useAppSelector';
+import { LoginData } from '../../types/User';
 
 const initialValues: LoginData = {
   email: '',
@@ -69,7 +69,7 @@ const LoginForm = () => {
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h4">
           Sign in
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
@@ -91,7 +91,7 @@ const LoginForm = () => {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: '2rem', mb: '2rem', fontSize: '1.2rem' }}
             disabled={isLoading}
           >
             Sign In
@@ -100,13 +100,8 @@ const LoginForm = () => {
             <Grid item>
               <Link
                 href="register"
-                variant="body1"
-                sx={{
-                  color: (t) =>
-                    t.palette.mode === 'light'
-                      ? t.palette.secondary.main
-                      : t.palette.primary.main,
-                }}
+                variant="subtitle1"
+                sx={{ color: 'inherit' }}
               >
                 {"Don't have an account? Sign Up"}
               </Link>

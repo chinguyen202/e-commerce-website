@@ -4,9 +4,9 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import CategoryIcon from '@mui/icons-material/Category';
-import { useAppDispatch } from '../hooks/useAppDispatch';
-import useAppSelector from '../hooks/useAppSelector';
-import { logoutUser } from '../store/reducers/userSlice';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
+import { logoutUser } from '../../store/reducers/userSlice';
 import SidebarItem from './SidebarItem';
 import { useNavigate } from 'react-router-dom';
 

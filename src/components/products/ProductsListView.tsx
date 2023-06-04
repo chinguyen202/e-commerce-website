@@ -8,7 +8,7 @@ import {
   Button,
   useTheme,
 } from '@mui/material';
-import { ProductsProps } from '../types/Product';
+import { ProductsProps } from '../../types/Product';
 
 const ProductsListView = ({ products }: ProductsProps) => {
   const theme = useTheme();

@@ -1,5 +1,5 @@
 import { Container, Typography, useTheme } from '@mui/material';
-import { formatPrice } from '../utils/helpers';
+import { formatPrice } from '../../utils/helpers';
 
 type Props = {
   title: string;

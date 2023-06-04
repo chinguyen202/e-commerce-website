@@ -9,9 +9,9 @@ import {
   TableBody,
   Typography,
 } from '@mui/material';
-import useAppSelector from '../hooks/useAppSelector';
-import { useAppDispatch } from '../hooks/useAppDispatch';
-import { fetchAllUsers } from '../store/store';
+import useAppSelector from '../../hooks/useAppSelector';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { fetchAllUsers } from '../../store/store';
 
 const CustomerList = () => {
   const dispatch = useAppDispatch();

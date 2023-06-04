@@ -7,11 +7,11 @@ import {
   Typography,
   Button,
 } from '@mui/material';
-import AddToCart from './AddToCart';
-import { formatPrice } from '../utils/helpers';
-import { useAppDispatch } from '../hooks/useAppDispatch';
-import { removeItem } from '../store/reducers/cartSlice';
-import { CartItemI } from '../types/Cart';
+import AddToCart from '../shared/AddToCart';
+import { formatPrice } from '../../utils/helpers';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { removeItem } from '../../store/reducers/cartSlice';
+import { CartItemI } from '../../types/Cart';
 
 type CartItemProps = {
   cartItem: CartItemI;

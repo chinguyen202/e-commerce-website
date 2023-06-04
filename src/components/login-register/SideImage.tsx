@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import shopping from '../assets/shopping.jpg';
+import shopping from '../../assets/shopping.jpg';
 
 const SideImage = () => {
   return (

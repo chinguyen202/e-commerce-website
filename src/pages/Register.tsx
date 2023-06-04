@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { SideImage } from '../components';
-import RegisterForm from '../components/RegisterForm';
+import RegisterForm from '../components/login-register/RegisterForm';
 import useAppSelector from '../hooks/useAppSelector';
 
 const Register = () => {
