@@ -26,10 +26,12 @@ const LoginForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [values, setValues] = useState(initialValues);
-  const { currentUser, isLoading } = useAppSelector((state) => state.user);
+  const { isAuth, currentUser, isLoading } = useAppSelector(
+    (state) => state.user
+  );
 
   useEffect(() => {
-    if (currentUser) {
+    if (isAuth) {
       setTimeout(() => {
         if (currentUser?.role === 'admin') {
           navigate('/user');
@@ -38,7 +40,7 @@ const LoginForm = () => {
         }
       }, 3000);
     }
-  }, [currentUser, dispatch, navigate]);
+  }, [isAuth, currentUser, dispatch, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

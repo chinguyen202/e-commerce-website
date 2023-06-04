@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Box, Container } from '@mui/material';
+import { Box, Container, useTheme } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import {
   AddToCart,
@@ -20,6 +20,7 @@ const SingleProduct = () => {
   );
 
   const dispatch = useAppDispatch();
+  const theme = useTheme();
 
   useEffect(() => {
     if (id) dispatch(fetchSingleProduct(id));
@@ -46,6 +47,7 @@ const SingleProduct = () => {
             flexDirection: 'row',
             padding: '2rem',
             marginBottom: '2rem',
+            bgcolor: theme.palette.primary.main,
           }}
         >
           <Box sx={{ flex: '1' }}>
@@ -58,7 +60,7 @@ const SingleProduct = () => {
               description={product.description}
               categoryName={product.category.name}
             />
-            <AddToCart item={product} />
+            <AddToCart item={product} isProductPage={true} />
           </Box>
         </Container>
       )}

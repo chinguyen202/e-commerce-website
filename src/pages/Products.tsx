@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Grid } from '@mui/material';
+import { Container, Grid, Skeleton, useTheme } from '@mui/material';
 import useAppSelector from '../hooks/useAppSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { fetchProducts } from '../store/store';
@@ -12,6 +12,7 @@ import {
 
 const Products = () => {
   const dispatch = useAppDispatch();
+  const theme = useTheme();
   const {
     products,
     gridView,
@@ -25,12 +26,12 @@ const Products = () => {
 
   useEffect(() => {
     dispatch(fetchProducts());
-  }, [dispatch, products, filterProducts, sortedProducts, isFilter, isSort]);
+  }, [dispatch, filterProducts, sortedProducts, isFilter, isSort]);
 
   return (
     <>
       <CurrentLocation name="Products" singleProduct={false} />
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{ bgcolor: theme.palette.primary.main }}>
         <Grid item xs={3}>
           <FilterProductsSideBar categories={categories} />
         </Grid>

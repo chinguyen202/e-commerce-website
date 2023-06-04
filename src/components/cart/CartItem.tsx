@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
   Box,
   Card,
@@ -73,7 +74,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
           </Button>
         </CardContent>
       </Box>
-      <AddToCart item={cartItem} />
+      <AddToCart item={cartItem} isProductPage={false} />
     </Card>
   );
 };

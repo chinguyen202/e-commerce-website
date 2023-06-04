@@ -17,7 +17,7 @@ export const createProduct = createAsyncThunk(
 );
 
 export const fetchProducts = createAsyncThunk(
-  'products/fetch',
+  'products/fetchAll',
   async (_, thunkAPI) => {
     try {
       const response = await customFetch('/products');
@@ -31,7 +31,7 @@ export const fetchProducts = createAsyncThunk(
 );
 
 export const fetchSingleProduct = createAsyncThunk(
-  'product/fetch',
+  'product/fetchSingle',
   async (id: string, thunkAPI) => {
     try {
       const response = await customFetch(`/products/${id}`);

@@ -24,6 +24,10 @@ import SidebarItem from './dashboard/SidebarItem';
 import CustomerList from './dashboard/CustomerList';
 import CheckoutForm from './checkout/CheckoutForm';
 import FormRow from './shared/FormRow';
+import PriceInput from './products/PriceInput';
+import SearchBox from './products/SearchBox';
+import AddressForm from './checkout/AddressForm';
+import PaymentForm from './checkout/PaymentForm';
 
 export {
   Footer,
@@ -52,4 +56,8 @@ export {
   SidebarItem,
   CustomerList,
   CheckoutForm,
+  PriceInput,
+  SearchBox,
+  AddressForm,
+  PaymentForm,
 };

@@ -22,9 +22,10 @@ import { Product } from '../../types/Product';
 
 type Props = {
   item: CartItemI | Product;
+  isProductPage: boolean;
 };
 
-const AddToCart = ({ item }: Props) => {
+const AddToCart = ({ item, isProductPage }: Props) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const [number, setNumber] = useState(0);
@@ -46,6 +47,9 @@ const AddToCart = ({ item }: Props) => {
   };
 
   const decrease = () => {
+    if (number === 0) {
+      return;
+    }
     setNumber(number - 1);
     if (amount === 1 && cartItem) {
       dispatch(removeItem(cartItem));
@@ -73,25 +77,38 @@ const AddToCart = ({ item }: Props) => {
           marginBottom: '2rem',
         }}
       >
-        <IconButton onClick={decrease} size="medium">
+        <IconButton
+          onClick={decrease}
+          size="medium"
+          sx={{ color: theme.palette.secondary.main }}
+        >
           <RemoveIcon />
         </IconButton>
         <Typography variant="h4" style={{ margin: '0 1rem' }}>
           {cartItem ? amount : number}
         </Typography>
-        <IconButton onClick={increase} size="medium">
+        <IconButton
+          onClick={increase}
+          size="medium"
+          sx={{ color: theme.palette.secondary.main }}
+        >
           <AddIcon />
         </IconButton>
       </Box>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => {
-          dispatch(addItem({ product: item, amount: number }));
-        }}
-      >
-        Add to Cart
-      </Button>
+      {isProductPage ? (
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            dispatch(addItem({ product: item, amount: number }));
+          }}
+          sx={{ fontSize: '1.2rem' }}
+        >
+          Add to Cart
+        </Button>
+      ) : (
+        <></>
+      )}
     </Box>
   );
 };

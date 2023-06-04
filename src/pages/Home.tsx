@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Container, useTheme } from '@mui/material';
+import { Container, Skeleton, useTheme } from '@mui/material';
 import useAppSelector from '../hooks/useAppSelector';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { fetchCategories } from '../store/store';
@@ -15,14 +15,14 @@ const Home = () => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <Container maxWidth={false} sx={{ bgcolor: theme.palette.primary.main }}>
       <Hero />
-      <CategoryList categories={categories} />
+      {isLoading ? (
+        <Skeleton width="100%" height="40rem" />
+      ) : (
+        <CategoryList categories={categories} />
+      )}
       <Services />
       <SignupPromotion />
     </Container>

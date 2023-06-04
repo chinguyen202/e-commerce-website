@@ -116,7 +116,7 @@ const App = () => {
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer />
-        <ToastContainer position="top-center" />
+        <ToastContainer position="top-center" closeOnClick autoClose={1000} />
       </Router>
     </ThemeProvider>
   );

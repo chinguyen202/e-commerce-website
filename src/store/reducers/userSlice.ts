@@ -28,10 +28,10 @@ const userSlice = createSlice({
   reducers: {
     logoutUser: (state) => {
       state.isAuth = false;
-      state.currentUser = null;
       state.token = undefined;
+      state.currentUser = initialState.currentUser;
       removeTokenFromLocalStorage();
-      toast.success('Log out succesfully!');
+      toast.success('Log out successfully!');
     },
   },
   extraReducers(builder) {
