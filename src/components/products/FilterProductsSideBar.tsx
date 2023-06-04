@@ -10,7 +10,7 @@ import {
   useTheme,
   Button,
 } from '@mui/material';
-import SearchBox from './SearchBox';
+import { SearchBox, PriceInput } from '../index';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { fetchCategories } from '../../store/store';
 import {
@@ -95,6 +95,7 @@ const FilterProductsSideBar = ({ categories }: FilterProductsSideBarProps) => {
       sx={{
         margin: '2rem',
         color: theme.palette.secondary.main,
+        bgcolor: theme.palette.primary.main,
       }}
     >
       <SearchBox
@@ -113,6 +114,7 @@ const FilterProductsSideBar = ({ categories }: FilterProductsSideBarProps) => {
                   checked={selectedCategory === category}
                   onChange={handleCategoryChange}
                   value={category.name}
+                  sx={{ color: theme.palette.secondary.main }}
                 />
               }
               label={category.name}
@@ -131,19 +133,15 @@ const FilterProductsSideBar = ({ categories }: FilterProductsSideBarProps) => {
             justifyContent: 'space-between',
           }}
         >
-          <TextField
-            type="number"
-            value={priceRange[0]} // Convert number to string
-            onChange={(e) => setPriceRange([e.target.value, priceRange[1]])}
+          <PriceInput
             label="Min Price"
-            variant="outlined"
+            value={priceRange[0]}
+            onChange={(e) => setPriceRange([e.target.value, priceRange[1]])}
           />
-          <TextField
-            type="number"
-            value={priceRange[1]} // Convert number to string
-            onChange={(e) => setPriceRange([priceRange[0], e.target.value])}
+          <PriceInput
             label="Max Price"
-            variant="outlined"
+            value={priceRange[1]}
+            onChange={(e) => setPriceRange([priceRange[0], e.target.value])}
           />
         </Box>
         <Button
@@ -153,6 +151,7 @@ const FilterProductsSideBar = ({ categories }: FilterProductsSideBarProps) => {
             color: theme.palette.primary.main,
             bgcolor: theme.palette.secondary.main,
             mt: '1rem',
+            fontSize: '1.2rem',
           }}
         >
           Apply Price Range
@@ -165,6 +164,7 @@ const FilterProductsSideBar = ({ categories }: FilterProductsSideBarProps) => {
           sx={{
             color: theme.palette.primary.main,
             bgcolor: theme.palette.secondary.main,
+            fontSize: '1.2rem',
           }}
         >
           Clear filters

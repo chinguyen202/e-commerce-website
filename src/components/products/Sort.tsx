@@ -79,6 +79,7 @@ const Sort = ({ products, gridView }: SortProps) => {
             onClick={handleClickGrid}
             sx={{
               bgcolor: gridView ? theme.palette.secondary.main : 'inherit',
+              color: gridView ? theme.palette.primary.main : 'inherit',
             }}
           >
             <GridViewIcon sx={{ fontSize: 24, marginRight: '0.5rem' }} />
@@ -87,13 +88,14 @@ const Sort = ({ products, gridView }: SortProps) => {
             onClick={handleClickList}
             sx={{
               bgcolor: !gridView ? theme.palette.secondary.main : 'inherit',
+              color: !gridView ? theme.palette.primary.main : 'inherit',
             }}
           >
             <ListIcon sx={{ fontSize: 26, marginRight: '0.5rem' }} />
           </IconButton>
         </Box>
         <Box sx={{ marginLeft: '2rem' }}>
-          <Typography variant="h6" sx={{}}>
+          <Typography variant="h6" sx={{ color: theme.palette.secondary.main }}>
             {products.length} products found
           </Typography>
         </Box>
@@ -101,15 +103,13 @@ const Sort = ({ products, gridView }: SortProps) => {
           <Box
             component="div"
             sx={{
+              color: theme.palette.secondary.main,
               bgcolor: theme.palette.primary.main,
               padding: '0.5rem 1rem',
               borderRadius: '4px',
               display: 'flex',
               alignItems: 'center',
               cursor: 'pointer',
-              '&:hover': {
-                bgcolor: theme.palette.primary.dark,
-              },
             }}
             onClick={handleSortMenuOpen}
           >
