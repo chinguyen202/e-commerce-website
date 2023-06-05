@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import AddressFormTextField from './AddressFormTextField';
 
 const AddressForm = () => {
   return (
@@ -13,94 +14,78 @@ const AddressForm = () => {
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
+          <AddressFormTextField
             id="firstName"
             name="firstName"
             label="First name"
-            fullWidth
-            autoComplete="given-name"
-            variant="standard"
+            autoComplete="first-name"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
+          <AddressFormTextField
             id="lastName"
             name="lastName"
             label="Last name"
-            fullWidth
             autoComplete="family-name"
-            variant="standard"
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            required
+          <AddressFormTextField
             id="address1"
             name="address1"
             label="Address line 1"
-            fullWidth
             autoComplete="shipping address-line1"
-            variant="standard"
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
+          <AddressFormTextField
             id="address2"
             name="address2"
             label="Address line 2"
-            fullWidth
             autoComplete="shipping address-line2"
-            variant="standard"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
+          <AddressFormTextField
             id="city"
             name="city"
             label="City"
-            fullWidth
             autoComplete="shipping address-level2"
-            variant="standard"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
+          <AddressFormTextField
             id="state"
             name="state"
             label="State/Province/Region"
-            fullWidth
             variant="standard"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
+          <AddressFormTextField
             id="zip"
             name="zip"
             label="Zip / Postal code"
-            fullWidth
             autoComplete="shipping postal-code"
-            variant="standard"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
+          <AddressFormTextField
             id="country"
             name="country"
             label="Country"
-            fullWidth
             autoComplete="shipping country"
-            variant="standard"
           />
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel
             control={
-              <Checkbox color="secondary" name="saveAddress" value="yes" />
+              <Checkbox
+                color="secondary"
+                name="saveAddress"
+                value="yes"
+                sx={{ color: 'inherit' }}
+              />
             }
             label="Use this address for payment details"
           />

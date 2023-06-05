@@ -42,7 +42,14 @@ const PaymentForm = () => {
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel
-            control={<Checkbox color="secondary" name="saveCard" value="yes" />}
+            control={
+              <Checkbox
+                color="secondary"
+                name="saveCard"
+                value="yes"
+                sx={{ color: 'inherit' }}
+              />
+            }
             label="Remember credit card details for next time"
           />
         </Grid>

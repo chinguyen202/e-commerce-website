@@ -65,7 +65,7 @@ const CheckoutForm = () => {
         >
           {steps.map((label) => (
             <Step key={label}>
-              <StepLabel>{label}</StepLabel>
+              <StepLabel sx={{ color: 'inherit' }}>{label}</StepLabel>
             </Step>
           ))}
         </Stepper>
