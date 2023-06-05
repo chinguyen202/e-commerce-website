@@ -10,7 +10,7 @@ export const removeCartFromStorage = () => {
 
 export const getCartFromStorage = () => {
   const result = localStorage.getItem('cart');
-  const cart = result ? JSON.parse(result) : null;
+  const cart = result ? JSON.parse(result) : [];
   return cart;
 };
 

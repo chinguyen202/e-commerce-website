@@ -7,7 +7,7 @@ import {
 } from '../../utils/localStorage';
 
 const initialState: Cart = {
-  cartItems: getCartFromStorage() ?? null,
+  cartItems: getCartFromStorage(),
   total: 0,
   totalAmount: 0,
   isLoading: false,
