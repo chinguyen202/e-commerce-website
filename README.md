@@ -1,20 +1,30 @@
 # Front-end Project
 
+## Goal: 
+
+Use the API endpoint [https://fakeapi.platzi.com/](https://fakeapi.platzi.com/) to create an e-commerce website.
+
+## Demo link
+
+https://fs15-frontend-project-nine.vercel.app/
+
+
+## Table of contents
+
+- [Technologies](#technologies)
+- [Features](#features)
+- [Future development](#future-development)
+- [Project Usage](#project-usage)
+
+## Technologies
 ![React](https://img.shields.io/badge/React-v.18-blue)
 ![Redux toolkit](https://img.shields.io/badge/RTK-v.1-purple)
 ![TypeScript](https://img.shields.io/badge/TypeScript-v.4-green)
 ![Material UI](https://img.shields.io/badge/MUI-v.5-blueviolet)
 
-## Table of contents
-
-- Features
-- Future development
-- How to use project
-- Deployment link
 
 ## Features
 
-1. Use the API endpoint [https://fakeapi.platzi.com/](https://fakeapi.platzi.com/) to create an e-commerce website.
 2. Homepage
 3. Product list page:
    - Display all products on the website with option for Gridview or Listview
@@ -46,7 +56,7 @@
 2. Write more tests
 3. Optimize performance
 
-## Instruction to start the project
+## Project usage 
 
 In the project directory, you can run:
 
@@ -71,6 +81,4 @@ Launches the test runner in the interactive watch mode
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-## Demo link
 
-https://fs15-frontend-project-nine.vercel.app/products
