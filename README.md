@@ -3,6 +3,14 @@
 ![React](https://img.shields.io/badge/React-v.18-blue)
 ![Redux toolkit](https://img.shields.io/badge/RTK-v.1-purple)
 ![TypeScript](https://img.shields.io/badge/TypeScript-v.4-green)
+![Material UI](https://img.shields.io/badge/MUI-v.5-blueviolet)
+
+## Table of contents
+
+- Features
+- Future development
+- How to use project
+- Deployment link
 
 ## Features
 
@@ -35,7 +43,8 @@
 ## Future development
 
 1. Check out page
-2. Optimize performance
+2. Write more tests
+3. Optimize performance
 
 ## Instruction to start the project
 
@@ -64,4 +73,4 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ## Demo link
 
-https://fs15-frontend-project-aqjq2009a-chinguyen202.vercel.app/
+https://fs15-frontend-project-nine.vercel.app/products
