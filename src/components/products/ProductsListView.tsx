@@ -21,6 +21,7 @@ const ProductsListView = ({ products }: ProductsProps) => {
             display: 'flex',
             m: '2rem',
             color: theme.palette.secondary.main,
+            bgcolor: theme.palette.primary.main,
           }}
         >
           <CardMedia
@@ -42,7 +43,7 @@ const ProductsListView = ({ products }: ProductsProps) => {
                 <Typography variant="h6" component="div">
                   {product.title}
                 </Typography>
-                <Typography variant="body1" color="textSecondary">
+                <Typography variant="body1">
                   Category: {product.category.name}
                 </Typography>
               </Box>
