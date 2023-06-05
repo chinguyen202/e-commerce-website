@@ -9,7 +9,6 @@ import {
   Step,
   StepLabel,
   useTheme,
-  Theme,
 } from '@mui/material';
 import { AddressForm, PaymentForm } from '../index';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
